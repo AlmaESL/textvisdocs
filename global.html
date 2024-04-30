@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+        <div class="thick-line"></div>
+    <h4 class="name" id="barchart"><span class="type-signature">(async) </span>barchart<span class="signature">(tokensOrPath, containerId, nWordsDisplayed<span class="signature-attributes">opt</span>, sortBy<span class="signature-attributes">opt</span>, language<span class="signature-attributes">opt</span>, keywords<span class="signature-attributes">opt</span>, useTFIDF<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that renders a bar chart from an array of tokens or an array of text files
+<br> - A list of kewywords can be searched for via the keyword input argument 
+<br> - Sort the bar chart by frequency or alphabetical order 
+
+<br><br> TF-IDF scores are normalized if more than one txt file or token array were given in the input. 
+<br><br> Prerequisites: 
+<br> - A div container
+<br> - Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokensOrPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Array of token arrays, array of file paths to .txt files (strings) or single path to .txt file (string)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>containerId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The name of the HTML container to hold the chart</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nWordsDisplayed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The number of words to display. If not specified (or set to null), displays all.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sortBy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Sort output by 'frequency' or 'alphabetical'. Defaults to 'frequency'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Language of the txt file, 'en' or 'sv' (if input is not tokenized)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keywords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Array of words to search for</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>useTFIDF</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">If true, sort bars based on TF-IDF score</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line1582">line 1582</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The bar chart visualization
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call bar chart with an array of file paths, language set to english, number of words to display = 20, keyowrds sorted 
+&lt;br>alphabetically (useTFIDF set to false)
+barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world', ...], false)</code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="calculateTfIdf"><span class="type-signature">(async) </span>calculateTfIdf<span class="signature">(allDocuments, language, N<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Array.&lt;Object>>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that processes an array of documents to calculate and sort TF-IDF scores for each term.
+<br>Optionally extracts the top N terms based on TF-IDF scores.
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>allDocuments</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;(string|Array.&lt;string>)></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">An array of documents or arrays of tokens.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
+
+            <td class="description last">The language for tokenization, if necessary.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>N</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Optional. The number of top terms to retain for each document.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line308">line 308</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - A promise that resolves to an array of sorted terms with their scores,
+                                      or the top N terms if N is provided.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;Array.&lt;Object>>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call calcualteTfIdf for an array of documents in english
+const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); </code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="countWords"><span class="type-signature">(async) </span>countWords<span class="signature">(tokens)</span><span class="type-signature"> &rarr; {Map|Number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that computes the count of each individual token and the total amount of tokens
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokens</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of tokenized text</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+<ul>
+        <li>
+<div class="param-desc">
+    - Map of tokens and count of each token
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Map</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    - Total word count
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call countWords for a token array
+const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="linechart"><span class="type-signature">(async) </span>linechart<span class="signature">(tokensOrPath, containerId, interval<span class="signature-attributes">opt</span>, language<span class="signature-attributes">opt</span>, keywords)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that renders a line chart for the keywords found in provided tokens, within the given interval.
+<br>Can choose to display either keywords or TF-IDF scores 
+
+<br><br>Prerequisites: 
+<br> - A div container with given dimensions
+<br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokensOrPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of tokens or path to a txt file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>containerId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The name of the container to hold the line chart</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>interval</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    10
+                
+                </td>
+            
+
+            <td class="description last">Interval of input to display</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'en'
+                
+                </td>
+            
+
+            <td class="description last">Language of the txt file, 'en' or 'sv'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keywords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of words to search for</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line1369">line 1369</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The line chart visualization
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call linechart with a tokens array, language set to english, interval=20 and an array of keywords to search for
+linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="normalize"><span class="type-signature">(async) </span>normalize<span class="signature">(text, language)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function that normalizes text by converting it to lowercase and removing punctuation.
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The text to normalize.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The language of the text ('en' or 'sv').</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The normalized text.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call normalize for text in english 
+const normalizedText = await normalize(text, 'en');</code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="normalizeTfIdfScores"><span class="type-signature">(async) </span>normalizeTfIdfScores<span class="signature">(processedDocuments)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that ormalizes TF-IDF scores in the range of [0, 1] using min-max scaling.
+
+This function takes an array of processed documents, each containing term scores,
+and scales these scores so that they fall within the range of [0, 1]. This
+normalization is based on the minimum and maximum scores found in the dataset,
+adjusting the scores linearly.
+
+<br><br> Prerequisites: 
+<br> - The input processedDocuments must come from the plugin calculateTfIdf
+<br> - Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>processedDocuments</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of objects, each representing a document's term scores.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line357">line 357</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An array of objects with each term's score normalized to the range [0, 1].
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call normalizeTfIdfScores for a set of tokens and their respective tfIdf scores
+const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="searchWords"><span class="type-signature">(async) </span>searchWords<span class="signature">(tokens, keyWords, language<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function that searches for one or more keywords in an array of tokens.
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokens</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of tokens</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyWords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of keywords to search for</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'en'
+                
+                </td>
+            
+
+            <td class="description last">Language of tokens, 'sv' or 'en'</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line166">line 166</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Returns array of keywords found in array of tokens
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Search for multiple keywords in tokens, language set to swedish
+const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="sort"><span class="type-signature">(async) </span>sort<span class="signature">(tokens, sortType<span class="signature-attributes">opt</span>, order<span class="signature-attributes">opt</span>, wordFrequencies<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Map}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function that sorts an array of tokens based on the specified criteria; 'alphabetically', 'frequency' or 'TF-IDF score'.
+<br>Note! TF-IDF based sorting computes and sorts by non-normalized TF-IDF scores -> sort for a corpus will sort after 
+<br>TF-IDF scores within each separate document or token array
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokens</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of tokens to be sorted.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sortType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "alphabetically"
+                
+                </td>
+            
+
+            <td class="description last">Sort type: "alphabetically", "frequency" or "tfIdfScore".</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "ascending"
+                
+                </td>
+            
+
+            <td class="description last">Sort order: "ascending" or "descending". Defaults to "ascending".</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>wordFrequencies</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Map</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Map of word frequencies. If not provided, sort function will compute frequencies.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line879">line 879</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Map of sorted tokens and their values TF-IDF score or frequency, depending on sorting type
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Map</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Sort tokens by descending frequency
+const sortedTokens = await sort(tokens, 'frequency', 'descending');</code></pre>
+
+
+
+        
+            
+
+    
+<div class="thick-line"></div>
+    
+    <h4 class="name" id="stem"><span class="type-signature">(async) </span>stem<span class="signature">(word, language)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A function that applies a very basic stemming algorithm to reduce words to their stem.
+<br>This is a rudimentary approach; for accurate stemming, use a dedicated library.
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>word</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The word to stem.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The language of the word ('en' or 'sv').</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line936">line 936</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The stemmed word.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call stem for a word in swedish 
+const stemmedWord = await stem(word, 'sv'); </code></pre>
+
+
+
+        
+            
+
+    
+<div class="thick-line"></div>
+    
+    <h4 class="name" id="table"><span class="type-signature">(async) </span>table<span class="signature">(tokensOrPath, language<span class="signature-attributes">opt</span>, containerId, sortType<span class="signature-attributes">opt</span>, order<span class="signature-attributes">opt</span>, keywords, export<span class="signature-attributes">opt</span>, shadowOn<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that renders a table from an array of tokens or an array of txt files.
+<br>- Sort the table by frequency, alphabetically or from TF-IDF scores, ascending or descending.
+<br>- Download the table from browser as excel file with the export argument set to true.
+
+<br><br>TF-IDF scores are normalized if more than one txt file or token arrays have been provided. 
+
+<br><br>Prerequisites: 
+<br> - A div container with given dimensions
+<br> - Scripts wherein this plugin is called must be of modular type; script type="module"Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokensOrPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of token arrays or paths to txt files</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'en'
+                
+                </td>
+            
+
+            <td class="description last">Language of the txt file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>containerId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The name of the container to hold the table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sortType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'alphabetically'
+                
+                </td>
+            
+
+            <td class="description last">Sort type: 'alphabetically', 'frequency' or 'tfIdfScore'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'ascending'
+                
+                </td>
+            
+
+            <td class="description last">Sort order: 'ascending' or 'descending'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keywords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of words to search for and display in the table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Boolean variable that will export the table to an excel file if set to true</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>shadowOn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Boolean variable to turn shadow styles on or off, off by default</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line991">line 991</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Array of tokens, tokens + count or tokens + TF-IDF scores returned, depending on sortType
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call table with tokens, language set to english, sort by TF-IDF scores ascending, keywords to search for and export to excel=true
+table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true); </code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="tokenize"><span class="type-signature">(async) </span>tokenize<span class="signature">(filePath, language)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;string>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that tokenizes the content of a text file, and removing common words based on the specified 
+<br>language: english or swedish
+
+<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filePath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Path to the text file.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
+
+            <td class="description last">Language of the text ('en' or 'sv'). Defaults to 'en'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line126">line 126</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - An array of tokens.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;string>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call tokenize for a text file in english
+const tokens = await tokenize(path, 'en'); </code></pre>
+
+
+
+        
+            
+
+    
+
+<div class="thick-line"></div>
+    <h4 class="name" id="treemap"><span class="type-signature">(async) </span>treemap<span class="signature">(tokensOrPath, containerId, language<span class="signature-attributes">opt</span>, keywords, useTFIDF<span class="signature-attributes">opt</span>, shadowOn<span class="signature-attributes">opt</span>, cap<span class="signature-attributes">opt</span>, colorPalette<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A plugin that renders a treemap from an array of token arrays or an array of text file paths
+ <br>- a list of keywords can be searched for via the keywords input
+ <br>- TF-IDF scores can be computed setting useTFIDF to true -> if more than one token array or text file, 
+ <br>normalized scores over entire corpus will be computed, else scores over the single document are computed 
+<br> Treemap also returns found keywords in an array, the array is empty if no keywords were found
+
+<br><br> Prerequisites: 
+<br> - A div container with an ID, to place the treemap in 
+<br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tokensOrPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of token arrays or paths to txt files</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>containerId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The name of the container to hold the treemap</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'en'
+                
+                </td>
+            
+
+            <td class="description last">Language of the txt file, 'en' or 'sv'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keywords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Array of words to search for</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>useTFIDF</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Boolean for activating TF-IDF computations</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>shadowOn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Boolean for activating shadows on the treemap</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cap</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">Integer than limits words displayed in treemap based on count</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colorPalette</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ['#deebf7', '#9ecae1', '#3182bd']
+                
+                </td>
+            
+
+            <td class="description last">Array of hex colors for the treemap</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line415">line 415</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An array of found keywords, will be 0 if no keywords were found
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Call treemap with array of token arrays, language set to english, an array with keys to search for and useTFIDF=true
+treemap([tokens1, tokens2], 'container', 'en', ['hello', 'world'], true); 
+
+// Call treemap with array of text file paths, language set to swedish, an array of keys to search for and useTFIDF=false
+treemap([path1, path2], 'container', 'sv', ['hej', 'världen'], false); </code></pre>
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav id = "sideBar">
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#barchart">barchart</a></li><li><a href="global.html#calculateTfIdf">calculateTfIdf</a></li><li><a href="global.html#countWords">countWords</a></li><li><a href="global.html#linechart">linechart</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#normalizeTfIdfScores">normalizeTfIdfScores</a></li><li><a href="global.html#searchWords">searchWords</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#tokenize">tokenize</a></li><li><a href="global.html#treemap">treemap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 30 2024 08:50:21 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

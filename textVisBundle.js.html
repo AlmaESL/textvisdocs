@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: textVisBundle.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: textVisBundle.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description
+ * A plugin that computes the count of each individual token and the total amount of tokens
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example
+ * // Call countWords for a token array
+ * const {wordCount, totalWordCount} = await countWords(tokens)
+ *
+ * @async
+ * 
+ * @param {Array} tokens - Array of tokenized text 
+ * @returns {Map} - Map of tokens and count of each token 
+ * @returns {Number} - Total word count
+ */
+async function countWords(tokens) {
+  if (!tokens || tokens.length === 0) {
+      return { wordCounts: new Map(), totalWordCount: 0 };
+  }
+
+  const wordCounts = new Map();
+  let totalWordCount = 0;
+
+  tokens.forEach(token => {
+      wordCounts.set(token, (wordCounts.get(token) || 0) + 1);
+      ++totalWordCount;
+  });
+
+  return { wordCounts, totalWordCount };
+}
+
+/******************************************************************************************** */
+
+/**
+ * @description
+ * A function that normalizes text by converting it to lowercase and removing punctuation.
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example 
+ * // Call normalize for text in english 
+ * const normalizedText = await normalize(text, 'en');
+ * 
+ * @async
+ * 
+ * @param {string} text - The text to normalize.
+ * @param {string} language - The language of the text ('en' or 'sv').
+ * @returns {string} - The normalized text.
+ */
+async function normalize(text, language) {
+    // This basic normalization will be similar for English and Swedish.
+    text = text.toLowerCase();
+    text = text.replace(/[\.,-\/#!$%\^&amp;\*;:{}=\-_`~()]/g, " "); // Remove common punctuation.
+    text = text.replace(/\s{2,}/g, " "); // Replace multiple spaces with a single space.
+    return text.trim();
+  }
+
+  /******************************************************************************************** */
+
+// Define common small words and filler words for English
+const commonWordsEn = ['are', 'where', 'has', 'must', 'although', 'was', 'were', 'due', 'did', 'more', 'each',
+    'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I', 'it', 'is', 'for', 'not', 'on',
+    'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we',
+    'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their',
+    'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make',
+    'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'year', 'your',
+    'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come',
+    'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first',
+    'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us',
+    'made', 'been', 'since', 'being', 'given', 'whether', 'should', 'those', 'along', 'caused', 'set',
+    'during', 'had', 'far', 'tho', 'twice', 'making', 'various', 'high', 'ever', 'carry', 'both', 'occur',
+    'seen', 'except', '"the', 'used', 'kept', 'going', 'nor', 'toghether', 'within', 'closer', 'let', 'live',
+    'full', 'core', 'same', 'held', 'takes', 'why', 'part', 'top', 'better', 'seek', 'strongest', 'form',
+    'last', 'via', 'enter', 'soon', 'through', 'around', 'i'];
+
+const commonWordsSv = ['var', 'har', 'måste', 'fastän', 'på grund av', 'gjorde', 'mer', 'varje',
+    'den', 'till', 'och', 'i', 'har', 'jag', 'det', 'är', 'för', 'inte', 'på',
+    'med', 'han', 'som', 'du', 'vid', 'denna', 'men', 'hans', 'av', 'från', 'de', 'vi',
+    'säga', 'hennes', 'hon', 'eller', 'kommer', 'min', 'en', 'alla', 'skulle', 'där', 'deras',
+    'vad', 'så', 'upp', 'ut', 'vem', 'få', 'vilken', 'gå', 'mig', 'när', 'göra',
+    'kan', 'gilla', 'tid', 'ingen', 'bara', 'honom', 'vet', 'ta', 'folk', 'in', 'år', 'din',
+    'bra', 'några', 'kunde', 'dem', 'se', 'annan', 'än', 'nu', 'titta', 'komma',
+    'dess', 'över', 'tänka', 'också', 'bakom', 'efter', 'använda', 'två', 'hur', 'vår', 'arbete', 'först',
+    'bra', 'sätt', 'även', 'ny', 'vill', 'eftersom', 'någon', 'dessa', 'ge', 'dag', 'mest', 'oss',
+    'gjord', 'varit', 'sedan', 'vara', 'givet', 'om', 'borde', 'de där', 'tillsammans', 'orsakade', 'inställd',
+    'under', 'att', 'ett', 'detta', 'hade', 'sin', 'gjort', 'sina', 'sker', 'hela', 'mellan',
+    'första', 'sig', 'dock', 'ha', 'före', 'utan', 'innan', 'vilket', 'kallad', 'finns', 'vissa',
+    'emot', 'ges', 'inom', 'ofta', 'ska', 'sett', 'hittills', 'därför', 'visas', 'visa',
+    'hålls', 'våra', 'mot', 'genom', 'vårt', 'fortsätter', 'ytterligare', 'ligger', 'kunna', 'kunnat',
+    'snart', 'bland', 'går', 'här', 'ser', 'lika', 'bli', 'blir', 'tas', 'kring', 'sitt',
+    'lagt', 'hör', 'utom', 'cirka', 'allt', 'aldrig', 'ändå', 'ger', 'kom', 'åt', 'blivit', 'får', 'anser'];
+
+// AUX function to read a txt file based on a string (path)
+async function readTextFile(path) {
+    try {
+        const response = await fetch(path);
+        if (!response.ok) {
+            throw new Error('Failed to fetch file');
+        }
+        return await response.text();
+    } catch (error) {
+        console.error('Error reading file:', error);
+        return null;
+    }
+}
+
+
+/**
+ * @description
+ * A plugin that tokenizes the content of a text file, and removing common words based on the specified 
+ * &lt;br>language: english or swedish
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example 
+ * // Call tokenize for a text file in english
+ * const tokens = await tokenize(path, 'en'); 
+ * 
+ * @async
+ * 
+ * @param {string} filePath - Path to the text file.
+ * @param {string} language - Language of the text ('en' or 'sv'). Defaults to 'en'.
+ * @returns {Promise&lt;Array&lt;string>>} - An array of tokens.
+ */
+async function tokenize(filePath, language = 'en') {
+    try {
+        const text = await readTextFile(filePath);
+        if (!text) return [];
+
+        // Use the normalize function to preprocess the text
+        const normalizedText = await normalize(text, language);
+
+        // Split the normalized text into tokens
+        let tokens = normalizedText.split(/\s+/);
+
+        // Filter out common words based on the specified language
+        const commonWords = language === 'en' ? commonWordsEn : commonWordsSv;
+        tokens = tokens.filter(token => !commonWords.includes(token));
+
+        return tokens;
+    } catch (error) {
+        console.error('Error tokenizing text:', error);
+        return [];
+    }
+}
+/******************************************************************************************** */
+
+/**
+ * @description
+ * A function that searches for one or more keywords in an array of tokens.
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example 
+ * // Search for multiple keywords in tokens, language set to swedish
+ * const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); 
+ * 
+ * @async
+ * 
+ * @param {Array} tokens Array of tokens 
+ * @param {Array} keyWords Array of keywords to search for 
+ * @param {String} [language='en'] Language of tokens, 'sv' or 'en'
+ * @returns {Array} Returns array of keywords found in array of tokens 
+ */
+async function searchWords(tokens, keyWords, language) {
+
+    // AUX function to generate variations of a keyword
+    const generateVariations = (keyword) => {
+        let variations = [
+            keyword, // Original
+            keyword + "ed", // Past tense
+            keyword + "ing", // Present participle
+            keyword + "s", // Plural form
+            keyword + "'s", // Possessive form
+            keyword + "ly", // Adverb form
+            keyword + "ic", // Adjective form
+            keyword + "ical", // Adjective form
+            keyword.slice(0, -1),
+            keyword.slice(0, -1) + "s", // Remove last character
+            keyword + "es", // Present tense with 's' suffix
+            keyword + "an"
+        ];
+
+        if (keyword.length >= 3) {
+            variations = variations.concat([
+                keyword.slice(0, -1) + "ies",
+                keyword.slice(0, -2) + "tic",
+                keyword.slice(0, -3) + "cy",
+                keyword.slice(0, -2) + "ish",
+                keyword.slice(0, -3) + "y"
+            ]);
+        }
+
+        let swedishVariations = [];
+
+        if (language === 'sv') {
+            swedishVariations = [
+                keyword + "n", // Swedish variation
+                keyword + "ns", // Swedish variation
+                keyword + "isk", // Adjective form
+                keyword + "iskt", // Adjective form
+                keyword + "iska", // Plural form
+                keyword + "samarbetet",
+                keyword + "land",
+                keyword.slice(0, -1)
+            ];
+
+
+            if (keyword.length >= 3) {
+                swedishVariations = swedishVariations.concat([keyword.slice(0, -2),
+                keyword.slice(0, -2) + "isk", // Swedish variation
+                keyword.slice(0, -2) + "tisk", // Swedish variation
+                keyword.slice(0, -2) + "cier", // Swedish variation
+                keyword.slice(0, -2), // Swedish variation
+                keyword.slice(0, -4) + "nska",
+                keyword.slice(0, -4) + "nskt",
+                keyword.slice(0, -4) + "nsk"// Swedish variation
+                ]);
+
+            }
+        }
+        return { englishVariations: variations, swedishVariations };
+    };
+
+    // Construct regex patterns based on language
+    const regexPatterns = keyWords.flatMap(keyword => {
+        const { englishVariations, swedishVariations } = generateVariations(keyword);
+        const allVariations = englishVariations.concat(swedishVariations);
+        return allVariations.map(variation => new RegExp(`\\b${variation}\\b`, 'i'));
+    });
+
+    // Array to store matched tokens
+    const matchedTokens = [];
+
+    // Loop through tokens to find matches for each keyword
+    tokens.forEach(token => {
+        regexPatterns.forEach(regexPattern => {
+            if (regexPattern.test(token)) {
+                matchedTokens.push(token);
+            }
+        });
+    });
+
+    return matchedTokens;
+}
+
+/******************************************************************************************** */
+
+// tfidf.js
+
+const documentFrequencyCache = new Map();
+
+// AUX function that checks if the input array is tokenized or a string (raw text)
+function isTokenized(input) {
+  return Array.isArray(input) &amp;&amp; input.every(item => typeof item === 'string');
+}
+
+// AUX function that computes the term frequency of a term within a given token array
+function termFrequency(term, tokens) {
+    const termCount = tokens.filter(token => token === term).length;
+    return termCount / tokens.length;
+}
+
+
+// AUX function that computes the document frequency for a term across all token arrays 
+async function documentFrequency(term, allTokens) {
+  if (documentFrequencyCache.has(term)) {
+    return documentFrequencyCache.get(term);
+  }
+  let docFrequency = 0;
+  for (const tokens of allTokens) {
+    if (tokens.includes(term)) {
+      docFrequency++;
+    }
+  }
+  documentFrequencyCache.set(term, docFrequency);
+  return docFrequency;
+}
+
+
+// AUX function that computes the inverse document frequency of a term across all token arrays
+async function inverseDocumentFrequency(term, allTokens) {
+    const df = await documentFrequency(term, allTokens);
+    return Math.log(allTokens.length / (df + 1));
+}
+
+
+/**
+ * @description
+ * A plugin that processes an array of documents to calculate and sort TF-IDF scores for each term.
+ * &lt;br>Optionally extracts the top N terms based on TF-IDF scores.
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example
+ * // Call calcualteTfIdf for an array of documents in english
+ * const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); 
+ * 
+ * @async
+ * 
+ * @param {Array&lt;string|string[]>} allDocuments - An array of documents or arrays of tokens.
+ * @param {string} language - The language for tokenization, if necessary.
+ * @param {number} [N] - Optional. The number of top terms to retain for each document.
+ * @returns {Promise&lt;Array&lt;Object[]>>} - A promise that resolves to an array of sorted terms with their scores,
+ *                                       or the top N terms if N is provided.
+ */
+async function calculateTfIdf(allDocuments, language = 'en', N = null) {
+  const processedDocuments = await Promise.all(allDocuments.map(async (doc) => {
+    const tokens = isTokenized(doc) ? doc : await tokenize(doc, language);
+    const tfIdfScores = {};
+
+    for (const token of new Set(tokens)) {
+      const tf = termFrequency(token, tokens);
+      const idf = await inverseDocumentFrequency(token, tokens);
+      tfIdfScores[token] = tf * idf;
+    }
+
+    // Sort terms by TF-IDF score in descending order and optionally slice the top N terms
+    const sortedTerms = Object.entries(tfIdfScores)
+      .map(([term, score]) => ({ term, score }))
+      .sort((a, b) => b.score - a.score);
+    
+    // If N is provided, return only the top N terms
+    return N ? sortedTerms.slice(0, N) : sortedTerms;
+  }));
+
+  return processedDocuments;
+}
+/******************************************************************************************** */
+
+
+
+/**
+ * @description
+ * A plugin that ormalizes TF-IDF scores in the range of [0, 1] using min-max scaling.
+ * 
+ * This function takes an array of processed documents, each containing term scores,
+ * and scales these scores so that they fall within the range of [0, 1]. This
+ * normalization is based on the minimum and maximum scores found in the dataset,
+ * adjusting the scores linearly.
+ * 
+ * &lt;br>&lt;br> Prerequisites: 
+ * &lt;br> - The input processedDocuments must come from the plugin calculateTfIdf
+ * &lt;br> - Scripts wherein this plugin is called must be type="module"
+ * 
+ * @async
+ * 
+ * @example 
+ * // Call normalizeTfIdfScores for a set of tokens and their respective tfIdf scores
+ * const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);
+ * 
+ *
+ * @param {Array&lt;Object>} processedDocuments - An array of objects, each representing a document's term scores.
+ * @returns {Array&lt;Object>} An array of objects with each term's score normalized to the range [0, 1].
+ */
+async function normalizeTfIdfScores(processedDocuments) {
+  // Flatten the array of arrays to get all TF-IDF score objects
+  const allScores = processedDocuments.flat();
+
+  let minScore = Infinity, maxScore = -Infinity;
+
+  // Determine the minimum and maximum scores
+  allScores.forEach(scoreObj => {
+      if (scoreObj.score &lt; minScore) minScore = scoreObj.score;
+      if (scoreObj.score > maxScore) maxScore = scoreObj.score;
+  });
+
+  // Calculate the range
+  const range = maxScore - minScore;
+
+  // Normalize the scores to the range [0, 1]
+  const normalizedScores = allScores.map(scoreObj => {
+      const normalizedScore = (scoreObj.score - minScore) / range;
+      return { term: scoreObj.term, score: normalizedScore };
+  });
+
+  return normalizedScores;
+}
+/******************************************************************************************** */
+
+/**
+ * 
+ * @description
+ * A plugin that renders a treemap from an array of token arrays or an array of text file paths
+ *  &lt;br>- a list of keywords can be searched for via the keywords input
+ *  &lt;br>- TF-IDF scores can be computed setting useTFIDF to true -> if more than one token array or text file, 
+ *  &lt;br>normalized scores over entire corpus will be computed, else scores over the single document are computed 
+ * &lt;br> Treemap also returns found keywords in an array, the array is empty if no keywords were found
+ * 
+ * &lt;br>&lt;br> Prerequisites: 
+ * &lt;br> - A div container with an ID, to place the treemap in 
+ * &lt;br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example
+ * // Call treemap with array of token arrays, language set to english, an array with keys to search for and useTFIDF=true
+ * treemap([tokens1, tokens2], 'container', 'en', ['hello', 'world'], true); 
+ * 
+ * // Call treemap with array of text file paths, language set to swedish, an array of keys to search for and useTFIDF=false
+ * treemap([path1, path2], 'container', 'sv', ['hej', 'världen'], false); 
+ * 
+ * @async
+ * 
+ * 
+ * @param {Array} tokensOrPath Array of token arrays or paths to txt files 
+ * @param {String} containerId The name of the container to hold the treemap 
+ * @param {String} [language='en'] Language of the txt file, 'en' or 'sv'
+ * @param {Array} keywords Array of words to search for
+ * @param {Boolean} [useTFIDF = false] Boolean for activating TF-IDF computations
+ * @param {Boolean} [shadowOn = false] Boolean for activating shadows on the treemap
+ * @param {Number} [cap = 1] Integer than limits words displayed in treemap based on count 
+ * @param {Array} [colorPalette = ['#deebf7', '#9ecae1', '#3182bd']] Array of hex colors for the treemap 
+ * @returns {Array} An array of found keywords, will be 0 if no keywords were found
+ */
+async function treemap(tokensOrPath, containerId, language = 'en', keywords = [],
+    useTFIDF = false, shadowOn = false, cap = 1, colorPalette = ['#deebf7', '#9ecae1', '#3182bd']) {
+
+    // Import required scripts
+    const script1 = document.createElement('script');
+    script1.src = "https://cdn.anychart.com/releases/8.10.0/js/anychart-bundle.min.js";
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.src = "https://d3js.org/d3.v5.min.js";
+    document.head.appendChild(script2);
+
+    // Wait for the scripts to load
+    await Promise.all([
+        new Promise((resolve, reject) => {
+            script1.onload = resolve;
+            script1.onerror = reject;
+        }),
+        new Promise((resolve, reject) => {
+            script2.onload = resolve;
+            script2.onerror = reject;
+        })
+    ]);
+
+
+    if (tokensOrPath.length === 0) {
+        alert("Tokens are required for creating a treemap.");
+        return;
+    }
+
+    // Handle tokenization
+    const tokens = await performTokenization(tokensOrPath, language);
+
+    // Search for key words using the searchWords plugin 
+    const foundWords = await keywordSearch(tokens, keywords, language);
+    if (foundWords.length === 0) {
+        alert('None of the specified keywords were found');
+    }
+
+    // Count words
+    const { wordCounts, totalWordCount } = await countWords(tokens);
+
+    // Cap number of words to be displayed 
+    const capWords = new Map(
+        [...wordCounts].filter(([key, value]) => value > cap));
+
+    // Calculate the cell width and height dynamically based on the number of words
+    const maxWordLength = Math.max(...Array.from(wordCounts.keys(), word => word.length));
+    const cellWidth = Math.min(50, Math.max(50, 5 * maxWordLength));
+    const cellHeight = 0.1 * cellWidth;
+
+    // Calculate the width and height based on window size
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Determine the number of rows and columns to fit window size
+    const numCols = Math.floor(windowWidth / cellWidth);
+    const numRows = Math.floor(windowHeight / cellHeight);
+
+    // Adjust the total width and height to fit within the window size
+    const totalWidth = numCols * cellWidth;
+    const totalHeight = numRows * cellHeight;
+
+    // Create a quantile scale based on word count
+    const colorScale = d3.scaleQuantile()
+        .domain([...capWords.values()])
+        .range(colorPalette);
+
+    // Define CSS for highlighted class
+    const highlightedCss = `
+        .highlighted {
+            fill: grey !important; 
+        }
+    `;
+
+    // Append the style to the head of the document
+    d3.select("head").append("style").text(highlightedCss);
+
+    // Create a treemap layout with adjusted size
+    const treemap = d3.treemap()
+        .size([totalWidth * 0.9, totalHeight * 0.9])
+        .padding(1)
+        .round(true);
+
+    // Select the container element and adjust its size
+    const svg_tree = d3.select("#" + containerId)
+        .append("svg")
+        .attr("width", totalWidth * 0.98)
+        .attr("height", totalHeight * 0.98)
+        .append('g')
+        .attr("transform", "translate(" + (totalWidth / 2 - totalWidth * 0.45) + "," + (totalHeight / 2 - totalHeight * 0.45) + ")");
+
+    // Append title to the SVG element
+    svg_tree.append("text")
+        .attr("x", totalWidth / 2)
+        .attr("y", -12)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("fill", "#333")
+        .style("filter", "drop-shadow(1px 1px 1px #000000")
+        .text("TextVis Treemap Visualization");
+
+    const cellGroup = svg_tree.append('g');
+
+    // Convert data to hierarchical format
+    const root = d3.hierarchy({ children: Array.from(capWords.entries(), ([key, value]) => ({ key, value })) })
+        .sum(function (d) { return d.value; })
+        .sort(function (a, b) { return b.height - a.height || b.value - a.value; });
+
+    // Generate the treemap
+    treemap(root);
+
+    // Create rectangles for each node with color based on word count
+    const cells = cellGroup.selectAll(".node")
+        .data(root.leaves())
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", function (d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+
+    // Append rectangles for cells with found keywords
+    const highlightedCells = cells.filter(d => foundWords.includes(d.data.key.toLowerCase()));
+    highlightedCells.append("rect")
+        .attr("width", function (d) { return d.x1 - d.x0; })
+        .attr("height", function (d) { return d.y1 - d.y0; })
+        .attr("fill", function (d) { return colorScale(d.value); })
+        .attr("stroke", "black")
+        .attr("stroke-width", 4);
+
+    // Append rectangles for remaining cells 
+    const regularCells = cells.filter(d => !foundWords.includes(d.data.key.toLowerCase()));
+    regularCells.append("rect")
+        .attr("width", function (d) { return d.x1 - d.x0; })
+        .attr("height", function (d) { return d.y1 - d.y0; })
+        .attr("fill", function (d) { return colorScale(d.value); });
+
+    // Append text labels 
+    const labels = cells.append("text")
+        .attr("class", "label")
+        .attr("x", function (d) { return (d.x1 - d.x0) / 2 })
+        .attr("y", function (d) { return (d.y1 - d.y0) / 2 })
+        .attr("dy", ".35em")
+        .attr("text-anchor", "middle")
+        .text(function (d) { return d.data.key; })
+        .style("font-familt", "sans-serif")
+        // Set initial opacity and font size of labels 
+        .style("fill-opacity", 1)
+        .style("font-size", function (d) {
+            const boxWidth = d.x1 - d.x0;
+            const boxHeight = d.y1 - d.y0;
+            const wordLength = d.data.key.length;
+
+            // Calculate font size based on word length and initial scale
+            let fontSize = (Math.min(boxWidth, boxHeight) / (wordLength)) * 2;
+
+            //max and min font size 
+            const maxFontSize = 10;
+            const minFontSize = Math.max(2, Math.min(4, Math.floor(totalWordCount / 1000)));
+
+            // Apply lower font size limit
+            if (fontSize &lt; minFontSize) {
+                fontSize = minFontSize;
+            }
+
+            // Apply upper font size limit
+            if (fontSize > maxFontSize) {
+                fontSize = maxFontSize;
+            }
+
+            return fontSize + "px";
+        });
+
+    // Zooming functionality
+    function zoomed() {
+        cellGroup.attr("transform", d3.event.transform);
+
+        // Adjust label opacity and font size based on zoom level
+        labels.style("fill-opacity", 1);
+        labels.style("font-size", function (d) {
+            const boxWidth = d.x1 - d.x0;
+            const boxHeight = d.y1 - d.y0;
+            const wordLength = d.data.key.length;
+
+            // Calculate font size based on word length and box size
+            let fontSize = (Math.min(boxWidth, boxHeight) / (wordLength * d3.event.transform.k)) * 2;
+
+            // Max and min font size 
+            const maxFontSize = 10;
+            const minFontSize = Math.max(2, Math.min(4, Math.floor(totalWordCount / 1000)));
+
+            // Apply lower font size limit
+            if (fontSize &lt; minFontSize) {
+                fontSize = minFontSize;
+            }
+
+            // Apply upper font size limit
+            if (fontSize > maxFontSize) {
+                fontSize = maxFontSize;
+            }
+            return fontSize + "px";
+        });
+    }
+
+
+    // Set zoom extent
+    const zoom = d3.zoom()
+        .scaleExtent([1, 15])
+        .on("zoom", zoomed);
+
+
+    // Highlight found words with red
+    if (foundWords.length > 0) {
+        cells.filter(d => foundWords.includes(d.data.key.toLowerCase()))
+            .select("rect")
+            .transition()
+            .duration(2000)
+            .attr("fill", "red");
+    }
+
+    // Call zooming functionality 
+    svg_tree.call(zoom);
+
+    // Add hover functionality
+    cells.on("mouseover", function (d) {
+        d3.select(this).select("rect").classed("highlighted", true);
+
+        // Calculate tooltip position based on mouse position
+        const tooltipX = d3.event.pageX;
+        const tooltipY = d3.event.pageY;
+
+        // Integrate tf-idf scores with tooltip 
+        const tfIdfScore = useTFIDF &amp;&amp; tfIdfMap.has(d.data.key) ? tfIdfMap.get(d.data.key) : null;
+
+        // Get word context
+        const context = getWordContext(tokens, d.data.key, 7);
+
+        // Style tooltip for hover effects 
+        const tooltip_tree = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("left", (tooltipX + 10) + "px")
+            .style("top", (tooltipY - 25) + "px")
+            .style("background-color", "rgba(255,255,255,0.9)")
+            .style("border", "1px solid #000")
+            .style("padding", "5px")
+            .style("position", "absolute");
+
+        // Apply cursor style to rect elements
+        d3.select(this).select("rect").style("cursor", "pointer");
+
+        // Create and display tooltip content 
+        let tooltipContent = "&lt;u>&lt;em>&lt;strong>" + d.data.key + "&lt;/strong>&lt;/em>&lt;/u>: " + d.data.value + " times";
+
+        // Display word context
+        if (context) {
+            const contextString = context.map((word) => {
+                if (word === d.data.key) {
+                    return "&lt;u>" + word + "&lt;/u>";
+                } else {
+                    return word;
+                }
+            }).join(", ");
+
+            tooltipContent += "&lt;br>&lt;strong>Context&lt;/strong>: " + contextString;
+        }
+
+        // Add tf-idf scores to tooltip
+        if (useTFIDF) {
+            tooltipContent += "&lt;br>&lt;strong>TF-IDF score&lt;/strong>: ";
+            if (tfIdfScore === null) {
+                tooltipContent += "0.000";
+            } else {
+                tooltipContent += tfIdfScore.toFixed(3);
+            }
+        }
+
+        tooltip_tree.html(tooltipContent);
+
+    })
+        .on("mouseout", function (d) {
+            d3.select(this).select("rect").classed("highlighted", false);
+
+            // Remove the displayed tooltip
+            d3.select(".tooltip").remove();
+        });
+
+
+    //Map for tf-idf scores 
+    let tfIdfMap;
+
+    //Apply color scale after tf-idf weights if tf-idf should be used 
+    if (useTFIDF &amp;&amp; tokensOrPath.length > 1) {
+
+        // Calculate TF-IDF scores
+        const tfIdfScores = await calculateTfIdf(tokensOrPath, language);
+        const normalizedScores = await normalizeTfIdfScores(tfIdfScores);
+
+        // Create a map of terms to their TF-IDF scores
+        tfIdfMap = new Map(normalizedScores.map(({ term, score }) => [term, score]));
+        
+        // Compute a bin-based color map 
+        const colorScale = d3.scaleOrdinal()
+            .domain(Array.from(colorPalette))
+            .range(colorPalette);
+
+        // Update color scale based on TF-IDF scores
+        cells.select("rect")
+            .attr("fill", function (d) {
+                return colorScale(tfIdfMap.has(d.data.key) ? tfIdfMap.get(d.data.key) : 0);
+            });
+    } else if (useTFIDF) {
+
+        // Calculate TF-IDF scores
+        const tfIdfScores = await calculateTfIdf([tokens], language);
+
+        // Create a map of terms to their TF-IDF scores
+        tfIdfMap = new Map(tfIdfScores[0].map(({ term, score }) => [term, score]));
+
+        const colorScale = d3.scaleOrdinal()
+            .domain(Array.from(colorPalette))
+            .range(colorPalette);
+
+        // Update color scale based on TF-IDF scores
+        cells.select("rect")
+            .attr("fill", function (d) {
+                return colorScale(tfIdfMap.has(d.data.key) ? tfIdfMap.get(d.data.key) : 0);
+            });
+
+    }
+
+    // Miscellaneous CSS
+    function applyCSS() {
+        const theCss = `
+            /* Define CSS for text labels */
+            .label {
+                font-family: sans-serif; 
+                fill: #000; 
+            }
+    
+            /* Define CSS for highlighted cells */
+            .node.highlighted rect {
+                fill: #ccc !important; 
+            }
+    
+            /* Define CSS for tooltip */
+            .tooltip {
+                font-family: "Times New Roman", Times, serif;
+                font-size: 15px; 
+                color: #333; 
+                background-color: rgba(255, 255, 255, 0.9); 
+                border: 1px solid #000; 
+                padding: 5px; 
+                position: absolute;
+                z-index: 999; 
+                pointer-events: auto; 
+            }
+    
+            /* Add transition effect to cells */
+            .node rect {
+                transition: opacity 0.3s ease;
+            }
+    
+            /* Add rounded corners and drop shadow on cells */
+            .node rect {
+                rx: 5px;
+                ry: 5px; 
+            }
+    
+            /* Add cursor on hover */
+            .node rect:hover {
+                cursor: pointer; 
+            }
+        `;
+        // Append CSS
+        d3.select("head").append("style").text(theCss);
+    }
+
+
+
+    if (shadowOn) {
+        // Define CSS for highlighted class
+        const shadowStyle = `
+            .node rect {
+            filter: drop-shadow(2px 2px 2px #000000);
+            }
+        `;
+
+        // Append the style to the head of the document
+        d3.select("head").append("style").text(shadowStyle);
+    }
+
+
+
+    async function performTokenization(tokensOrPaths, language) {
+        let tokens = [];
+
+        if (Array.isArray(tokensOrPaths)) {
+
+            // If tokensOrPaths is an array, assume it contains multiple paths or tokens
+            for (const tokenOrPath of tokensOrPaths) {
+                if (typeof tokenOrPath === 'string') {
+                    // Tokenize the text file
+                    const fileTokens = await tokenize(tokenOrPath, language);
+                    tokens.push(...fileTokens);
+                } else if (Array.isArray(tokenOrPath)) {
+                    // If it's an array, assume it contains tokens
+                    tokens.push(...tokenOrPath);
+                } else {
+                    console.error('Invalid input format. Expected string or array.');
+                }
+            }
+        } else if (typeof tokensOrPath === "string") {
+            tokens = await tokenize(tokensOrPaths);
+
+        }
+
+        return tokens;
+    }
+
+    // Function to handle keyword searching
+    async function keywordSearch(tokens, keywords, language) {
+        if (keywords &amp;&amp; keywords.length > 0) {
+            return await searchWords(tokens, keywords, language || []);
+        }
+        return [];
+    }
+
+    // Function to get word context
+    function getWordContext(tokens, word, contextSize) {
+        const index = tokens.indexOf(word);
+        if (index === -1) {
+            return null; // Word not found in tokens
+        }
+        const start = Math.max(0, index - Math.floor(contextSize / 2));
+        const end = Math.min(tokens.length - 1, index + Math.floor(contextSize / 2));
+        return tokens.slice(start, end + 1);
+    }
+
+    // Add remaining css 
+    applyCSS();
+
+    // Return found key words, will be 0 if non are found 
+    return foundWords;
+}
+
+/**
+ * @description
+ * A function that sorts an array of tokens based on the specified criteria; 'alphabetically', 'frequency' or 'TF-IDF score'.
+ * &lt;br>Note! TF-IDF based sorting computes and sorts by non-normalized TF-IDF scores -> sort for a corpus will sort after 
+ * &lt;br>TF-IDF scores within each separate document or token array
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example
+ * // Sort tokens by descending frequency
+ * const sortedTokens = await sort(tokens, 'frequency', 'descending');
+ * 
+ * @async
+ * 
+ * @param {array} tokens - Array of tokens to be sorted.
+ * @param {string} [sortType="alphabetically"] - Sort type: "alphabetically", "frequency" or "tfIdfScore". 
+ * @param {string} [order="ascending"] - Sort order: "ascending" or "descending". Defaults to "ascending".
+ * @param {Map} [wordFrequencies] - Map of word frequencies. If not provided, sort function will compute frequencies.
+ * @returns {Map} - Map of sorted tokens and their values TF-IDF score or frequency, depending on sorting type
+ */
+async function sort(tokens, sortType = "alphabetically", order = "ascending", wordFrequencies) {
+    // Copy of tokens
+    let sorted = [...tokens];
+
+    // Initialize the map to store token-frequency pairs or token-tfIdfScore pairs
+    let tokenMap = new Map();
+
+    // If sorting is by frequency, compute word frequencies
+    if (sortType === "frequency") {
+        const { wordCounts } = await countWords(tokens);
+        tokenMap = new Map([...wordCounts].sort((a, b) => {
+            return order === 'ascending' ? a[1] - b[1] : b[1] - a[1];
+        }));
+    }
+    
+
+    // If sorting is by tfIdfScore, compute tf-idf scores
+    if (sortType === "tfIdfScore") {
+        const tfIdfData = await calculateTfIdf([tokens]);
+        tokenMap = new Map(tfIdfData[0].map(({ term, score }) => [term, score]));
+    
+        // Sort the tokenMap based on tf-idf scores
+        tokenMap = new Map([...tokenMap.entries()].sort((a, b) => {
+            return order === 'ascending' ? a[1] - b[1] : b[1] - a[1];
+        }));
+    }
+
+    // If sorting alphabetically, the map's second half will be empty
+    if (sortType === "alphabetically") {
+        const sortedEntries = [...sorted].sort((a, b) => {
+            return order === 'ascending' ? a.localeCompare(b) : b.localeCompare(a);
+        });
+        const lenght = Math.ceil(sortedEntries.length / 1);
+        tokenMap = new Map(sortedEntries.slice(0, lenght).map(token => [token, ""]));
+    }
+
+    return tokenMap;
+}
+/******************************************************************************************** */
+
+/**
+ * @description
+ * A function that applies a very basic stemming algorithm to reduce words to their stem.
+ * &lt;br>This is a rudimentary approach; for accurate stemming, use a dedicated library.
+ * 
+ * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example
+ * // Call stem for a word in swedish 
+ * const stemmedWord = await stem(word, 'sv'); 
+ * 
+ * @async
+ * 
+ * @param {string} word - The word to stem.
+ * @param {string} language - The language of the word ('en' or 'sv').
+ * @returns {string} - The stemmed word.
+ */
+function stem(word, language) {
+    if (language === 'en') {
+      const enSuffixes = ['ing', 'ly', 'ed', 'ious', 'ies', 'ive', 'es', 's', 'ment'];
+      return applyStemmingRules(word, enSuffixes);
+    } else if (language === 'sv') {      
+      const svSuffixes = ['ing', 'ligt', 'ade', 'dd', 'tt', 's', 'en', 'ar', 'or'];
+      return applyStemmingRules(word, svSuffixes);
+    } else {
+      console.error('Unsupported language for stemming.');
+      return word;
+    }
+  }
+  
+  
+  // AUX function that applies stemming rules based on language-specific suffixes
+  function applyStemmingRules(word, suffixes) {
+    let stem = word;
+    suffixes.some(suffix => {
+      if (word.endsWith(suffix)) {
+        stem = word.slice(0, -suffix.length);
+        return true; // Stops the loop once a suffix match is found.
+      }
+      return false;
+    });
+    return stem;
+  }
+  /******************************************************************************************** */
+
+/**
+ * @description
+ * A plugin that renders a table from an array of tokens or an array of txt files.
+ * &lt;br>- Sort the table by frequency, alphabetically or from TF-IDF scores, ascending or descending.
+ * &lt;br>- Download the table from browser as excel file with the export argument set to true.
+ * 
+ * &lt;br>&lt;br>TF-IDF scores are normalized if more than one txt file or token arrays have been provided. 
+ * 
+ * &lt;br>&lt;br>Prerequisites: 
+ * &lt;br> - A div container with given dimensions
+ * &lt;br> - Scripts wherein this plugin is called must be of modular type; script type="module"Scripts wherein this plugin is called must be type="module"
+ * @example
+ * // Call table with tokens, language set to english, sort by TF-IDF scores ascending, keywords to search for and export to excel=true
+ * table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true); 
+ * 
+ * @async
+ * 
+ * @param {Array} tokensOrPath Array of token arrays or paths to txt files 
+ * @param {String} [language='en'] Language of the txt file
+ * @param {String} containerId The name of the container to hold the table
+ * @param {String} [sortType='alphabetically'] Sort type: 'alphabetically', 'frequency' or 'tfIdfScore'. 
+ * @param {String} [order='ascending'] Sort order: 'ascending' or 'descending'.
+ * @param {Array} keywords Array of words to search for and display in the table
+ * @param {Boolean} [export=false] Boolean variable that will export the table to an excel file if set to true
+ * @param {Boolean} [shadowOn = false] Boolean variable to turn shadow styles on or off, off by default
+ * @returns {Array} Array of tokens, tokens + count or tokens + TF-IDF scores returned, depending on sortType 
+ */
+async function table(tokensOrPath, language = 'en', containerId, sortType = 'alphabetically',
+    order = 'ascending', keywords = [], exoport = false, shadowOn = false) {
+
+    if (tokensOrPath.length === 0) {
+        alert("Tokens are required for creating a table.");
+        return;
+    }
+
+    // Handle tokenization
+    const tokens = await performTokenization(tokensOrPath, language);
+
+    // If array of keywords is provided, search for keywords to display 
+    let useTokens = tokens;
+    if (keywords &amp;&amp; keywords.length > 0) {
+        useTokens = await searchWords(tokens, keywords, language || []);
+
+    } else if (keywords.length === 0) {
+        alert('No keywords to search for provided.');
+    }
+
+    let tokenMap;
+    // Compute normalized scores if more than one document in the corpus
+    if (tokensOrPath.length > 1 &amp;&amp; sortType === "tfIdfScore") {
+
+        const tfIdfScores = await calculateTfIdf(tokensOrPath, language);
+        const normalizedScores = await normalizeTfIdfScores(tfIdfScores);
+
+        tokenMap = new Map(normalizedScores.map(({ term, score }) => [term, score]));
+
+        // Filter tokenMap based on useTokens
+        if (useTokens.length !== 0) {
+            tokenMap = new Map([...tokenMap.entries()].filter(([term, _]) => useTokens.includes(term)));
+        }
+
+
+        // Sort the tokenMap based on tf-idf normalized scores
+        tokenMap = new Map([...tokenMap.entries()].sort((a, b) => {
+            return order === 'ascending' ? a[1] - b[1] : b[1] - a[1];
+        }));
+
+    } else {
+        if (useTokens.length === 0) {
+            tokenMap = await sort(tokens, sortType, order);
+        } else {
+            tokenMap = await sort(useTokens, sortType, order);
+        }
+    }
+
+
+    // Count words
+    const { wordCounts } = await countWords(tokens);
+
+    let output;
+    // Handle return depending on sort type
+    switch (sortType) {
+        case "alphabetically":
+            output = { tokens: [...tokenMap.keys()] };
+            break;
+        case "frequency":
+            output = { tokensWithCounts: [...tokenMap] };
+        case "tfIdfScore":
+            output = { tokensWithScores: [...tokenMap] };
+            break;
+        default:
+            console.error("Invalid sortType");
+            return;
+    }
+
+    // Select the container element
+    const container = d3.select(`#${containerId}`);
+
+    // Append styles to the container
+    container.append('style').text(`
+    .table-container {
+        max-height: 600; 
+        overflow-y: auto;
+        border: 2px solid #3498db; 
+    }
+
+    .bodyTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .bodyTable th,
+    .bodyTable td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+    .bodyTable th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: #3498db; 
+        color: #ffffff;
+    }
+
+    .bodyTable td {
+        background-color: #f2f2f2; 
+    }
+
+    .bodyTable tr:nth-child(even) td {
+        background-color: #f9f9f9; 
+    }
+
+    .bodyTable tr:nth-child(odd) td {
+        background-color: #e6e6e6; 
+    }
+
+    .scroll {
+        overflow-y: auto;
+        max-height: 300px;
+    }
+
+    .bodyTable tr:hover td {
+        background-color: rgba(0,0,0,0.25); 
+        cursor: pointer
+    }
+
+    
+    .table-container {
+        max-height: 600px;
+        overflow-y: auto;
+        border: 3px solid #3498db;
+        border-radius: 10px; 
+    }
+
+    .total-tokens {
+        position: bottom;
+        top: 10px; 
+        bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px; 
+        right: 10px; 
+        font-size: 14px;
+        color: #333;
+        font-weight:bold
+    }
+`);
+
+    // Create the table structure - headers
+    const outerTable = container.append('table').attr("class", "table-container");
+
+    // Append the header
+    outerTable.append('caption')
+        .style("text-anchor", "middle")
+        .style("font-size", "30px")
+        .style("font-weight", "bold")
+        .style("fill", "#333")
+        .text('TextVis Table Visualization');
+
+    // Create table entries structure
+    const inner = outerTable.append("tr").append("td")
+        .append("div").attr("class", "scroll").attr("width", "100%").style("overflow", "auto")
+        .append("table").attr("class", "bodyTable").attr("border", 1).style("table-layout", "fixed");
+
+    const thead = inner.append('thead');
+    const tbody = inner.append('tbody');
+
+    // Append table headers
+    let headersData;
+    if (sortType === "alphabetically") {
+        headersData = ["Word", "Context", "Count"];
+    } else if (sortType === "frequency") {
+        headersData = ["Word", "Count", "Context"];
+    } else if (sortType === "tfIdfScore") {
+        headersData = ["Word", "TF-IDF Score", "Context", "Count"];
+    } else {
+        console.error("Invalid sortType");
+        return;
+    }
+
+    thead.append('tr')
+        .selectAll('th')
+        .data(headersData)
+        .enter()
+        .append('th')
+        .text(d => d);
+
+    // Append table rows
+    const rows = tbody.selectAll('tr')
+        .data([...tokenMap.entries()])
+        .enter()
+        .append('tr');
+
+    // Append cells with token values and frequency or tf-idf score
+    rows.each(async function ([token, value]) {
+        const row = d3.select(this);
+        row.append('td').text(token);
+
+        // If sorting is alphabetical, no right column
+        if (sortType !== "alphabetically") {
+            if (sortType == "tfIdfScore") {
+                row.append('td').text(value.toFixed(3));
+            } else {
+                row.append('td').text(value.toFixed(0));
+            }
+        }
+
+        // Display word context
+        const context = getWordContext(tokens, token, 7);
+        const contextHtml = context ? context.map(word => word === token ? `&lt;u>${word}&lt;/u>` : word).join(', ') : '';
+        row.append('td').html(contextHtml);
+
+        // Append word count in the rightmost column
+        if (sortType === "alphabetically" || sortType === "tfIdfScore") {
+            row.append('td').text(wordCounts.get(token) || 0);
+        }
+    });
+
+    // Get the total amount of tokens
+    const totalTokens = tokens.length;
+    const uniqueSearchTokens = new Set(useTokens);
+    const uniqueTokens = new Set(tokens);
+
+    // Append total tokens and unique tokens count
+    container.append('div')
+        .attr('class', 'total-tokens')
+        .html(`Total number of words read: ${totalTokens}
+      &lt;br>Number of unique words read: ${uniqueTokens.size}`);
+
+    if (uniqueSearchTokens.size == 0) {
+        alert("None of the specified keywords were found.");
+    }
+
+    if (keywords &amp;&amp; keywords.length > 0) {
+        container.append('div')
+            .attr('class', 'total-tokens')
+            .html(`&lt;br>Number of words matching the search sequence: ${uniqueSearchTokens.size.toFixed(0)}`);
+    }
+
+    // Export to excel if bool export = true
+    if (exoport) {
+        exportTableToExcel(containerId);
+    }
+
+    // Function to handling tokens or path input 
+    async function performTokenization(tokensOrPaths, language) {
+        let tokens = [];
+
+        if (Array.isArray(tokensOrPaths)) {
+            // If tokensOrPaths is an array, assume it contains multiple paths or tokens
+            for (const tokenOrPath of tokensOrPaths) {
+                if (typeof tokenOrPath === 'string') {
+                    // Tokenize the text file
+                    const fileTokens = await tokenize(tokenOrPath, language);
+                    tokens.push(...fileTokens);
+                } else if (Array.isArray(tokenOrPath)) {
+                    // If it's an array, assume it contains tokens
+                    tokens.push(...tokenOrPath);
+                } else {
+                    console.error('Invalid input format. Expected string or array.');
+                }
+            }
+        } else if (typeof tokensOrPath === "string") {
+            tokens = await tokenize(tokensOrPath);
+        }
+
+        return tokens;
+    }
+
+    // Activate/deactivate shadow styling in table 
+    if (shadowOn === true) {
+        container.append('style').text(`
+        .bodyTable th,
+        .bodyTable td {
+         filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.2)); 
+        }
+    
+        .bodyTable th {
+            filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.2)); 
+        }
+        `);
+        outerTable.style("filter", "drop-shadow(1.5px 1.5px 1.5px rgba(0, 0, 0, 0.7))");
+    }
+
+
+    // Return the output variable, that changes depending on sort type
+    return output;
+}
+
+
+// AUX function to get word context - same as in treemap
+function getWordContext(tokens, word, contextSize) {
+    const index = tokens.indexOf(word);
+    if (index === -1) {
+        return null;
+    }
+    const start = Math.max(0, index - Math.floor(contextSize / 2));
+    const end = Math.min(tokens.length - 1, index + Math.floor(contextSize / 2));
+    return tokens.slice(start, end + 1);
+}
+
+
+// AUX function to export table to excel file
+function exportTableToExcel(containerId) {
+
+    // Get teh counteriner 
+    const table = document.getElementById(containerId);
+    const rows = table.querySelectorAll('table tbody tr');
+
+    // Create a workbook XML structure
+    const xmlContent = `&lt;?xml version="1.0"?>
+    &lt;?mso-application progid="Excel.Sheet"?>
+    &lt;Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+      xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:x="urn:schemas-microsoft-com:office:excel"
+      xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+      xmlns:html="http://www.w3.org/TR/REC-html40">
+        &lt;Worksheet ss:Name="Sheet1">
+            &lt;Table>
+    `;
+
+    // Add table headers
+    const tableHeaders = table.querySelectorAll('table thead tr th');
+    let xmlTable = '&lt;Row>';
+    tableHeaders.forEach(header => {
+        xmlTable += `&lt;Cell>&lt;Data ss:Type="String">${header.textContent}&lt;/Data>&lt;/Cell>`;
+    });
+    xmlTable += '&lt;/Row>';
+
+    // Add table rows
+    rows.forEach(row => {
+        xmlTable += '&lt;Row>';
+        row.querySelectorAll('td').forEach(cell => {
+            xmlTable += `&lt;Cell>&lt;Data ss:Type="String">${cell.textContent}&lt;/Data>&lt;/Cell>`;
+        });
+        xmlTable += '&lt;/Row>';
+    });
+
+    // Close XML structure
+    xmlTable += '&lt;/Table>&lt;/Worksheet>&lt;/Workbook>';
+
+    // Create a blob containing the XML content
+    const blob = new Blob([xmlContent + xmlTable], { type: 'application/vnd.ms-excel' });
+
+    // Create a temporary link element to trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table.xls';
+
+    // Set additional headers
+    link.setAttribute('style', 'display:none');
+    link.setAttribute('download', 'table.xls');
+    link.setAttribute('type', 'application/octet-stream');
+
+    // Trigger the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+/******************************************************************************************** */
+
+/**
+ * @description
+ * A plugin that renders a line chart for the keywords found in provided tokens, within the given interval.
+ * &lt;br>Can choose to display either keywords or TF-IDF scores 
+ * 
+ * &lt;br>&lt;br>Prerequisites: 
+ * &lt;br> - A div container with given dimensions
+ * &lt;br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+ * 
+ * @example
+ * // Call linechart with a tokens array, language set to english, interval=20 and an array of keywords to search for
+ * linechar(tokens, 'container', 20, 'en', ['hello', 'world']); 
+ * 
+ * @async
+ * 
+ * @param {Array} tokensOrPath Array of tokens or path to a txt file
+ * @param {String} containerId The name of the container to hold the line chart
+ * @param {Number} [interval=10] Interval of input to display
+ * @param {String} [language='en'] Language of the txt file, 'en' or 'sv'
+ * @param {Array} keywords Array of words to search for
+ * @returns {void} The line chart visualization
+ */
+async function linechart(tokensOrPath, containerId, interval = 10, language = 'en', keywords = []) {
+    let tokens;
+
+    if (typeof tokensOrPath === 'string') {
+        // Tokenize the text file
+        tokens = await tokenize(tokensOrPath, language);
+    } else {
+        tokens = tokensOrPath;
+    }
+
+    if (!tokens || tokens.length === 0) {
+        console.error('Tokens are required for creating a treemap.');
+        return;
+    }
+
+    let foundWords = [];
+    if (keywords &amp;&amp; keywords.length > 0) {
+        foundWords = await searchWords(tokens, keywords || []);
+    }
+
+    if (foundWords.length === 0) {
+        alert('None of the specified keywords were found');
+    }
+
+    // Count words
+    const { totalWordCount } = await countWords(tokens);
+
+    // Set size of the interval after number of intervals input
+    const intervalSize = Math.ceil(totalWordCount / interval);
+
+    // Create data for the line chart   
+    const data = [];
+
+    keywords.forEach(async (keyword) => {
+        const keywordData = [];
+        for (let i = 0; i &lt; interval; i++) {
+            const startIndex = i * intervalSize;
+            const endIndex = (i + 1) * intervalSize;
+
+            const occurrences = tokens
+                .slice(startIndex, endIndex)
+                .filter(word => word === keyword)
+                .length;
+
+            keywordData.push({
+                currentInterval: i + 1,
+                occurrences: occurrences
+            });
+        }
+
+        data.push(keywordData);
+    });
+
+    var container = document.getElementById(containerId);
+
+    // Extract the width and height of the container
+    var totalWidth = container.offsetWidth;
+    var totalHeight = container.offsetHeight;
+
+    // Create D3.js line chart
+    const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+    const width = totalWidth - 60;
+    const height = totalHeight - 60;
+
+    if (foundWords != 0) {
+        // Select the container element and adjust its size
+        const svg = d3.select("#" + containerId)
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Create scales
+        const x = d3.scaleLinear()
+            .domain([0.5, interval + 0.5])
+            .range([0, width * 0.9]);
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data.flat(), d => d.occurrences)])
+            .range([height, 0]);
+
+        // Draw axis
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x));
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // Draw area chart for each keyword
+        data.forEach((keywordData, index) => {
+            const area = d3.area()
+                .x(d => x(d.currentInterval-0.5))
+                .y0(height)
+                .y1(d => y(d.occurrences))
+                .curve(d3.curveStepAfter);
+            svg.append("path")
+                .datum(keywordData)
+                .attr("fill", d3.schemeCategory10[index])
+                .attr("opacity", 0.2)
+                .attr("d", area)
+                .on("mouseover", function() {
+                    // Highlight the area
+                    d3.select(this).attr("opacity", "1");
+                    d3.select(this).raise();
+                    // Show tooltip
+                    const [mouseX, mouseY] = d3.mouse(this.parentNode);
+                    const keyword = keywords[index];
+                    const currentIndex = Math.floor(mouseX / (width * 0.9 / interval)); // Calculate the index of the interval based on mouse position
+                    const currentDatum = keywordData[currentIndex]; // Get the corresponding data point
+                    const currentInterval = currentDatum ? currentDatum.currentInterval -1: null; // Extract the currentInterval
+                    const occurrences = currentDatum ? currentDatum.occurrences : 0;
+                    const svg = d3.select("#" + containerId + " svg");
+                    const tooltip = svg.append("g")
+                        .attr("class", "tooltip");
+                
+                    // Append rectangle for the tooltip background
+                    tooltip.append("rect")
+                        .attr("width", 140)
+                        .attr("height", 60) 
+                        .attr("fill", "white")
+                        .attr("stroke", "black");
+                
+                    // Append text for keyword, interval and occurrences
+                    tooltip.append("text")
+                        .attr("x", 10)
+                        .attr("y", 20)
+                        .text(`Keyword: ${keyword}`)
+                        .attr("font-size", "12px")
+                        .attr("fill", "black");
+
+                    const intervalLower = (currentInterval) * intervalSize;
+                    const intervalUpper = (currentInterval+1) * intervalSize;
+
+                    tooltip.append("text")
+                        .attr("x", 10)
+                        .attr("y", 35)
+                        .text(`Word interval: ${intervalLower}-${intervalUpper}`)
+                        .attr("font-size", "12px")
+                        .attr("fill", "black");
+
+                    tooltip.append("text")
+                        .attr("x", 10)
+                        .attr("y", 50)
+                        .text(`Occurrences: ${occurrences}`)
+                        .attr("font-size", "12px")
+                        .attr("fill", "black");
+                
+                    // Calculate the position of the tooltip relative to the SVG element
+                    const svgRect = svg.node().getBoundingClientRect();
+                    const svgX = mouseX - svgRect.left;
+                    const svgY = mouseY - svgRect.top;
+                
+                    // Adjust position of the tooltip
+                    const tooltipHeight = 60;
+                    const tooltipOffsetX = -50; 
+                    const tooltipX = Math.max(svgX - tooltipOffsetX, 10); 
+                    const tooltipY = Math.min(svgY + 10, svgRect.height - tooltipHeight - 10);
+                
+                    tooltip.attr("transform", `translate(${tooltipX},${tooltipY})`);
+                })
+
+                .on("mouseout", function () {
+                    d3.select(this).attr("opacity", 0.2);
+                    d3.select(".tooltip").remove();
+                });
+
+            // Draw line chart
+            svg.append("path")
+                .datum(keywordData)
+                .attr("fill", "none")
+                .attr("stroke", d3.schemeCategory10[index])
+                .attr("stroke-width", 2)
+                .attr("opacity", 1)
+                .attr("d", d3.line()
+                    .x(d => x(d.currentInterval-0.5))
+                    .y(d => y(d.occurrences))
+                    .curve(d3.curveStepAfter)
+                );
+        });
+    }
+}
+
+/******************************************************************************************** */
+
+/**
+ * @description
+ * A plugin that renders a bar chart from an array of tokens or an array of text files
+ * &lt;br> - A list of kewywords can be searched for via the keyword input argument 
+ * &lt;br> - Sort the bar chart by frequency or alphabetical order 
+ * 
+ * &lt;br>&lt;br> TF-IDF scores are normalized if more than one txt file or token array were given in the input. 
+ * &lt;br>&lt;br> Prerequisites: 
+ * &lt;br> - A div container
+ * &lt;br> - Scripts wherein this plugin is called must be type="module"
+ * 
+ * @async
+ * 
+ * @example 
+ * // Call bar chart with an array of file paths, language set to english, number of words to display = 20, keyowrds sorted 
+ * &lt;br>alphabetically (useTFIDF set to false)
+ * barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world', ...], false)
+ * 
+ * @param {Array} tokensOrPath Array of token arrays, array of file paths to .txt files (strings) or single path to .txt file (string)
+ * @param {String} containerId The name of the HTML container to hold the chart
+ * @param {int} [nWordsDisplayed] The number of words to display. If not specified (or set to null), displays all.
+ * @param {String} [sortBy] Sort output by 'frequency' or 'alphabetical'. Defaults to 'frequency'.
+ * @param {String} [language] Language of the txt file, 'en' or 'sv' (if input is not tokenized)
+ * @param {Array} [keywords] Array of words to search for
+ * @param {bool} [useTFIDF] If true, sort bars based on TF-IDF score
+ * @returns {void} The bar chart visualization
+ */
+
+// sorting input - freq, alphabetical
+async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, language, keywords, useTFIDF) {
+
+    language = language || 'en';
+    sortBy = sortBy || 'frequency';
+    useTFIDF = useTFIDF || false;
+    const container = document.getElementById(containerId);
+    let tokens = await performTokenization(tokensOrPath, language);
+
+    // Styling
+    var upperColor = "#444499";
+    var lowerColor = "#AAAAFF";
+    var foundColor = "#FF6633";
+
+    // Key words search
+    if (keywords) {
+        let foundWords = [];
+        if (keywords.length > 0) {
+            foundWords = await searchWords(tokens, keywords, language || []);
+            if (foundWords.length === 0) {
+                alert('None of the specified keywords were found');
+            }
+        } 
+    }
+
+    let tfIdfScores;
+    let tfIdfMap;
+    if (useTFIDF) {
+        if (Array.isArray(tokensOrPath) &amp;&amp; tokensOrPath.length > 1 ) {
+            // If input is array of several file paths or several tokens, calculate scores then flatten
+            //console.log("input: array of file paths");
+
+            // Calculate TF-IDF scores
+            tfIdfScores = await calculateTfIdf(tokensOrPath, language);
+
+            //const normalizedScores = await normalizeTfIdfScores(tfIdfScores);
+            //console.log("normalized scores: ", normalizedScores);
+    
+            // Flatten array
+            const allScores = tfIdfScores.flat();
+    
+            // Create a map of terms to their TF-IDF scores
+            tfIdfMap = new Map(allScores.map(({ term, score }) => [term, score]));
+    
+            // Create a color scale based on TF-IDF scores
+            d3.scaleLinear()
+                .domain([0, d3.max(tfIdfScores, d => d.score)])
+                .range([lowerColor, upperColor]);
+    
+            // Update color scale based on TF-IDF scores
+                
+        } else if(Array.isArray(tokensOrPath) &amp;&amp; tokensOrPath.length == 1) {
+            // If length of array = 1, assume it contains one file path
+            //console.log("input: file path as single element in array");
+
+            tokens = await tokenize(tokensOrPath[0]);
+            tfIdfScores = await calculateTfIdf([tokens], language);
+            tfIdfMap = new Map(tfIdfScores[0].map(({ term, score }) => [term, score]));
+
+        } else if (!Array.isArray(tokensOrPath)) {
+            // If not array, assume input is file path
+            //console.log("input: file path as string");
+
+            tokens = await tokenize(tokensOrPath);
+            tfIdfScores = await calculateTfIdf([tokens], language);
+            tfIdfMap = new Map(tfIdfScores[0].map(({ term, score }) => [term, score]));
+        }
+    }
+
+
+    const { wordCounts, _ } = await countWords(tokens);
+    // Sort tokens
+    if (sortBy == 'frequency') {
+        tokens = await sort(tokens, 'frequency', 'descending');
+    }
+    else if (sortBy == 'alphabetical') {
+        tokens = await sort(tokens, 'alphabetically', 'ascending');
+        tokens.forEach((value, key) => {
+            if (wordCounts.has(key)) {
+                tokens.set(key, wordCounts.get(key));
+            }
+        });
+    }
+
+    // Convert map to array of objects
+    var data = Array.from(tokens, ([word, count]) => ({ word, count }));
+
+    // Slice array to desired number of bars
+    if (nWordsDisplayed) {
+        data = data.slice(0, nWordsDisplayed);
+    }
+
+    // Find highest value of count in data
+    const highestCount = data.reduce((max, current) => {
+        return Math.max(max, current.count);
+    }, -Infinity);
+
+    // Dimensions
+    const width = container.offsetWidth;
+    const minBarWidth = width / 50; // Minimum bar width
+    const barSpace = 4; // For spacing
+    const totalWidth = Math.max(width, data.length * (minBarWidth + barSpace));
+
+    const height = container.offsetHeight;
+    const margin = { top: 20, right: 1, bottom: 5 + (0.1 * height), left: 3 + (0.03 * width) };
+    const ymargins = margin.top + margin.bottom + (height * 0.01);
+    const xmargins = margin.left + margin.right;
+    var fontsize = (2 * height / 100);
+
+    const parent = d3.select("#" + containerId);
+
+    // Y axis
+    var y = d3.scaleLinear()
+        .domain([0, highestCount])
+        .range([height - ymargins, 0]);
+
+    // X axis
+    var x = d3.scaleBand()
+        .range([margin.left, totalWidth - margin.right - (5 * fontsize)])
+        .domain(data.map(function (d) { return d.word; }))
+        .padding(0.2);
+
+    // Append y axis
+    parent.append("svg")
+        .attr("height", height)
+        .style("position", "absolute")
+        .style("pointer-events", "none")
+        .style("z-index", 1)
+        .append("g")
+        .call(d3.axisLeft(y)) // Check if the y-axis is correctly generated
+        .call(g => g.select(".domain").remove())
+        .attr("transform", "translate(" + margin.left + "," + (height * 0.02) + ")")
+        .selectAll("text")
+        .attr("fill", "black")
+        .style("font-size", fontsize + "px");
+
+    // Scrollable body, if dataset is large
+    const body = parent.append("div")
+        .style("overflow-x", "auto")
+        .style("-webkit-overflow-scrolling", "touch")
+        .attr("id", containerId + "-chart");
+
+    // Append chart container element
+    const svg = body.append("svg")
+        .attr("width", totalWidth)
+        .attr("height", height)
+        .style("display", "block");
+
+    // Append x axis
+    svg.append("g")
+        .attr("transform", "translate(0," + (height - ymargins + (height * 0.02)) + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end")
+            .style("fill","#000000")
+            .style("font-size", fontsize + "px");
+
+    // Add the bars
+    var barWidth = Math.max(x.bandwidth(), minBarWidth);
+    const colorScale = useTFIDF &amp;&amp; Array.isArray(tfIdfScores[0]) ? d3.scaleLinear()
+        .domain([0, d3.max(tfIdfScores[0], d => d.score)])
+        .range([lowerColor, upperColor])
+        : null;
+
+    
+
+    svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+            .attr("x", function(d) { return x(d.word); })
+            .attr("y", function(d) { return y(d.count) + (height * 0.02); })
+            .attr("width", barWidth)
+            .attr("height", function(d) { return height - ymargins - y(d.count); })
+            .attr("fill", function(d) {
+                let finalColor;
+                if (useTFIDF) {
+                    finalColor = colorScale(tfIdfMap.has(d.word) ? tfIdfMap.get(d.word) : 0);
+                } else finalColor = upperColor;
+                if (keywords &amp;&amp; keywords.includes(d.word)) {
+                    finalColor = foundColor;
+                }
+                return finalColor;
+            })
+            .attr("stroke", function(d) {
+                if (keywords &amp;&amp; keywords.includes(d.word)) {
+                    return "black";
+                } else {
+                    return;
+                }
+            })
+
+        // Hover effect
+        .on("mouseover", function (d) {
+            d3.select(this).attr("opacity", 0.5);
+
+            // Calculate tooltip position based on mouse position
+
+            const [xMouse, yMouse] = d3.mouse(svg.node());
+            const tooltipX = xMouse - xmargins;
+            const tooltipY = yMouse - margin.bottom / 2 - 8;
+            const tfIdfScore = useTFIDF &amp;&amp; tfIdfMap.has(d.word) ? tfIdfMap.get(d.word) : null;
+
+            const tooltip = svg.append("g")
+            .attr("id", "tooltip")
+            .attr("transform", "translate(" + tooltipX + "," + tooltipY + ")");
+            
+            
+            var content = d.word + ": " + d.count + " occurences";
+
+            const tooltipText = tooltip.append("text")
+                .text(content);
+
+            const bbox = tooltipText.node().getBBox();
+            tooltipText.remove();
+            
+            content += useTFIDF ? "\n" +  "TF-IDF score: " + tfIdfScore.toFixed(3) : "";
+
+            tooltip.append("rect")
+                .attr("width", bbox.width + 8)
+                .attr("height", bbox.height + fontsize + 8)
+                .attr("fill", "white")
+                .attr("stroke", "#DDDDDD");
+
+            tooltip.append("text")
+                .attr("font-size", fontsize + 2)
+                .attr("fill", "black")
+                .selectAll("tspan")
+                .data(content.split("\n")) // Split content by newline character
+                .enter().append("tspan")
+                .attr("x", 4) // Adjust x position as needed
+                .attr("dy", "1.2em") // Set line spacing
+                .text(function(d) { return d; });
+        })
+        .on("mouseout", function() {
+            d3.select(this)
+            .attr("opacity", 1); 
+            d3.select("#tooltip").remove();
+        })
+    ;
+}
+
+async function performTokenization(tokensOrPaths, language) {
+    let tokens = [];
+
+    if (Array.isArray(tokensOrPaths)) {
+        // If tokensOrPaths is an array, assume it contains multiple paths or tokens
+        for (const tokenOrPath of tokensOrPaths) {
+            if (typeof tokenOrPath === 'string') {
+                // Tokenize the text file
+                const fileTokens = await tokenize(tokenOrPath, language);
+                tokens.push(...fileTokens);
+            } else if (Array.isArray(tokenOrPath)) {
+                // If it's an array, assume it contains tokens
+                tokens.push(...tokenOrPath);
+            } else {
+                console.error('Invalid input format. Expected string or array.');
+            }
+        }
+    } else if (typeof tokensOrPaths === 'string') {
+        // Input = one file path
+        tokens = await tokenize(tokensOrPaths);
+    }
+
+    return tokens;
+}
+
+
+/******************************************************************************************** */
+
+export { barchart, calculateTfIdf, countWords, linechart, normalize, normalizeTfIdfScores, searchWords, sort, stem, table, tokenize, treemap };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#barchart">barchart</a></li><li><a href="global.html#calculateTfIdf">calculateTfIdf</a></li><li><a href="global.html#countWords">countWords</a></li><li><a href="global.html#linechart">linechart</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#normalizeTfIdfScores">normalizeTfIdfScores</a></li><li><a href="global.html#searchWords">searchWords</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#tokenize">tokenize</a></li><li><a href="global.html#treemap">treemap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 30 2024 08:50:21 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
