@@ -31,6 +31,15 @@ html
     font-size: 14px;
 }
 
+body
+{
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    color: #4d4e53;
+    background-color: white;
+}
+
+
 .thick-line {
     border-top: 8px solid #000000;
     margin: 20px 0;
@@ -46,14 +55,6 @@ html
     border-left: 4px solid #ccc;
     padding-left: 16px;
     box-sizing: border-box;
-}
-
-body
-{
-    font-family: 'Open Sans', sans-serif;
-    line-height: 1.5;
-    color: #4d4e53;
-    background-color: white;
 }
 
 a, a:visited, a:active {
@@ -126,7 +127,7 @@ nav
     margin-top: 28px;
     width: 30%;
     box-sizing: border-box;
-    border-left: 1px solid #ccc;
+    border-left: 8px solid #ccc;
     padding-left: 16px;
 }
 

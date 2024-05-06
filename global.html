@@ -104,7 +104,7 @@
     
 
         <div class="thick-line"></div>
-    <h4 class="name" id="barchart"><span class="type-signature">(async) </span>barchart<span class="signature">(tokensOrPath, containerId, nWordsDisplayed<span class="signature-attributes">opt</span>, sortBy<span class="signature-attributes">opt</span>, language<span class="signature-attributes">opt</span>, keywords<span class="signature-attributes">opt</span>, useTFIDF<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="barchart"><span class="type-signature">(async) </span>barchart<span class="signature">(tokensOrPath, containerId, nWordsDisplayed, sortBy, language, keywords, useTFIDF)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -112,14 +112,14 @@
 
 
 <div class="description">
-    A plugin that renders a bar chart from an array of tokens or an array of text files
-<br> - A list of kewywords can be searched for via the keyword input argument 
-<br> - Sort the bar chart by frequency or alphabetical order 
+    A plugin that renders a bar chart from an array of tokens or an array of text files.
+<br> - A list of kewywords can be searched for via the keyword input argument. 
+<br> - Sort the bar chart by frequency or by alphabetical order.
 
 <br><br> TF-IDF scores are normalized if more than one txt file or token array were given in the input. 
-<br><br> Prerequisites: 
-<br> - A div container
-<br> - Scripts wherein this plugin is called must be type="module"
+
+<br><br> <strong> Prerequisites: </strong>
+<br> - A div container with an ID and given dimensions to place the bar chart in.
 </div>
 
 
@@ -143,9 +143,9 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -170,15 +170,11 @@
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
+            
+                <td class="default">
                 
                 </td>
-            
-
             
 
             <td class="description last">Array of token arrays, array of file paths to .txt files (strings) or single path to .txt file (string)</td>
@@ -201,15 +197,11 @@
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
+            
+                <td class="default">
                 
                 </td>
-            
-
             
 
             <td class="description last">The name of the HTML container to hold the chart</td>
@@ -232,20 +224,14 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
-                
-
+            
+                <td class="default">
                 
                 </td>
             
 
-            
-
-            <td class="description last">The number of words to display. If not specified (or set to null), displays all.</td>
+            <td class="description last">The number of words to display. If not specified (or set to null), displays all</td>
         </tr>
 
     
@@ -265,20 +251,16 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
+            
+                <td class="default">
                 
-
+                    frequency
                 
                 </td>
             
 
-            
-
-            <td class="description last">Sort output by 'frequency' or 'alphabetical'. Defaults to 'frequency'.</td>
+            <td class="description last">Sort output by 'frequency' or 'alphabetical', defaults to 'frequency'</td>
         </tr>
 
     
@@ -298,20 +280,16 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
+            
+                <td class="default">
                 
-
+                    en
                 
                 </td>
             
 
-            
-
-            <td class="description last">Language of the txt file, 'en' or 'sv' (if input is not tokenized)</td>
+            <td class="description last">Language of the txt file, 'en' or 'sv', defaults to 'en'</td>
         </tr>
 
     
@@ -331,20 +309,14 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
-                
-
+            
+                <td class="default">
                 
                 </td>
             
 
-            
-
-            <td class="description last">Array of words to search for</td>
+            <td class="description last">Array of words to search for, can be left empty []</td>
         </tr>
 
     
@@ -364,20 +336,16 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
+            
+                <td class="default">
                 
-
+                    false
                 
                 </td>
             
 
-            
-
-            <td class="description last">If true, sort bars based on TF-IDF score</td>
+            <td class="description last">If true, sort bars based on TF-IDF score, defaults to false</td>
         </tr>
 
     
@@ -418,7 +386,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line1582">line 1582</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line1565">line 1565</a>
     </li></ul></dd>
     
 
@@ -472,7 +440,7 @@
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// Call bar chart with an array of file paths, language set to english, number of words to display = 20, keyowrds sorted 
-&lt;br>alphabetically (useTFIDF set to false)
+// alphabetically (useTFIDF set to false)
 barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world', ...], false)</code></pre>
 
 
@@ -483,7 +451,7 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
     
 
 <div class="thick-line"></div>
-    <h4 class="name" id="calculateTfIdf"><span class="type-signature">(async) </span>calculateTfIdf<span class="signature">(allDocuments, language, N<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Array.&lt;Object>>>}</span></h4>
+    <h4 class="name" id="calculateTfIdf"><span class="type-signature">(async) </span>calculateTfIdf<span class="signature">(allDocuments, language)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Array.&lt;Object>>>}</span></h4>
     
 
     
@@ -493,8 +461,6 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
 <div class="description">
     A plugin that processes an array of documents to calculate and sort TF-IDF scores for each term.
 <br>Optionally extracts the top N terms based on TF-IDF scores.
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
 </div>
 
 
@@ -517,8 +483,6 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
 
         <th>Type</th>
 
-        
-        <th>Attributes</th>
         
 
         
@@ -547,14 +511,6 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -562,7 +518,7 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
                 </td>
             
 
-            <td class="description last">An array of documents or arrays of tokens.</td>
+            <td class="description last">An array of documents or arrays of tokens</td>
         </tr>
 
     
@@ -582,14 +538,6 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -599,14 +547,14 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
                 </td>
             
 
-            <td class="description last">The language for tokenization, if necessary.</td>
+            <td class="description last">The language for tokenization, if necessary</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>N</code></td>
+                <td class="name"><code>Optional.</code></td>
             
 
             <td class="type">
@@ -619,26 +567,14 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
                 
-                    null
-                
                 </td>
             
 
-            <td class="description last">Optional. The number of top terms to retain for each document.</td>
+            <td class="description last">The number of top terms to retain for each document</td>
         </tr>
 
     
@@ -679,7 +615,7 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line308">line 308</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line298">line 298</a>
     </li></ul></dd>
     
 
@@ -708,8 +644,8 @@ barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world'
 
         
 <div class="param-desc">
-    - A promise that resolves to an array of sorted terms with their scores,
-                                      or the top N terms if N is provided.
+    A promise that resolves to an array of sorted terms with their scores,
+                                      or the top N terms if N is provided
 </div>
 
 
@@ -752,9 +688,7 @@ const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); </code></pre>
 
 
 <div class="description">
-    A plugin that computes the count of each individual token and the total amount of tokens
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+    A plugin that computes the count of each individual token and the total amount of tokens from an array of tokens.
 </div>
 
 
@@ -847,7 +781,7 @@ const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); </code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line17">line 17</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -896,7 +830,7 @@ const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); </code></pre>
     
         <li>
 <div class="param-desc">
-    - Total word count
+    - Total word count (total number of tokens)
 </div>
 
 
@@ -921,7 +855,7 @@ const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); </code></pre>
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// Call countWords for a token array
-const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
+const {wordCount, totalWordCount} = await countWords(tokens);</code></pre>
 
 
 
@@ -929,9 +863,9 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
             
 
     
-
 <div class="thick-line"></div>
-    <h4 class="name" id="linechart"><span class="type-signature">(async) </span>linechart<span class="signature">(tokensOrPath, containerId, interval<span class="signature-attributes">opt</span>, language<span class="signature-attributes">opt</span>, keywords)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+    <h4 class="name" id="linechart"><span class="type-signature">(async) </span>linechart<span class="signature">(tokensOrPath, containerId, interval, language, keywords, useTFIDF)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -939,12 +873,11 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
 
 
 <div class="description">
-    A plugin that renders a line chart for the keywords found in provided tokens, within the given interval.
-<br>Can choose to display either keywords or TF-IDF scores 
+    A plugin that renders a linechart from tokens or a text file, where a list of keywords can be 
+searched for.
 
-<br><br>Prerequisites: 
-<br> - A div container with given dimensions
-<br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+<br><br> <strong> Prerequisites: </strong>
+<br>- A div container with an ID and given dimensions to place the linechart in
 </div>
 
 
@@ -967,8 +900,6 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
 
         <th>Type</th>
 
-        
-        <th>Attributes</th>
         
 
         
@@ -997,14 +928,6 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -1012,7 +935,7 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
                 </td>
             
 
-            <td class="description last">Array of tokens or path to a txt file</td>
+            <td class="description last">Array of tokens, path to txt file</td>
         </tr>
 
     
@@ -1032,14 +955,6 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -1047,7 +962,7 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
                 </td>
             
 
-            <td class="description last">The name of the container to hold the line chart</td>
+            <td class="description last">The name of the container to hold the treemap</td>
         </tr>
 
     
@@ -1060,22 +975,12 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Int</span>
 
 
             
             </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -1086,7 +991,7 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
                 </td>
             
 
-            <td class="description last">Interval of input to display</td>
+            <td class="description last">Number of intervals for the stepchart</td>
         </tr>
 
     
@@ -1106,26 +1011,16 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
                 
-                    'en'
+                    en
                 
                 </td>
             
 
-            <td class="description last">Language of the txt file, 'en' or 'sv'</td>
+            <td class="description last">Language of the txt file, 'en' or 'sv', defaults to 'en'</td>
         </tr>
 
     
@@ -1145,14 +1040,6 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -1160,7 +1047,36 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
                 </td>
             
 
-            <td class="description last">Array of words to search for</td>
+            <td class="description last">Array of words to search for, can be left empty []</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>useTFIDF</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Boolean for activating TF-IDF computations, defaults to false</td>
         </tr>
 
     
@@ -1201,7 +1117,7 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line1369">line 1369</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line1313">line 1313</a>
     </li></ul></dd>
     
 
@@ -1230,7 +1146,7 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
 
         
 <div class="param-desc">
-    The line chart visualization
+    The linechart visualization
 </div>
 
 
@@ -1255,7 +1171,7 @@ const {wordCount, totalWordCount} = await countWords(tokens)</code></pre>
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// Call linechart with a tokens array, language set to english, interval=20 and an array of keywords to search for
-linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
+linechart(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
 
 
 
@@ -1263,8 +1179,8 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
             
 
     
-
 <div class="thick-line"></div>
+    
     <h4 class="name" id="normalize"><span class="type-signature">(async) </span>normalize<span class="signature">(text, language)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
@@ -1273,9 +1189,7 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
 
 
 <div class="description">
-    A function that normalizes text by converting it to lowercase and removing punctuation.
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+    A plugin that normalizes text by converting it to lowercase and removing special characters.
 </div>
 
 
@@ -1300,6 +1214,8 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
 
         
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1326,8 +1242,12 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last">The text to normalize.</td>
+            <td class="description last">The text to normalize</td>
         </tr>
 
     
@@ -1349,8 +1269,14 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
             
 
             
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
 
-            <td class="description last">The language of the text ('en' or 'sv').</td>
+            <td class="description last">The language of the text ('en' or 'sv')</td>
         </tr>
 
     
@@ -1391,7 +1317,7 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line51">line 51</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -1420,7 +1346,7 @@ linechar(tokens, 'container', 20, 'en', ['hello', 'world']); </code></pre>
 
         
 <div class="param-desc">
-    - The normalized text.
+    - The normalized text
 </div>
 
 
@@ -1463,16 +1389,12 @@ const normalizedText = await normalize(text, 'en');</code></pre>
 
 
 <div class="description">
-    A plugin that ormalizes TF-IDF scores in the range of [0, 1] using min-max scaling.
+    A plugin that normalizes TF-IDF scores in the range of [0, 1] using min-max scaling.
 
-This function takes an array of processed documents, each containing term scores,
+This plugin takes an array of processed documents, each containing term scores <strong>from calculateTfIdf </strong>,
 and scales these scores so that they fall within the range of [0, 1]. This
 normalization is based on the minimum and maximum scores found in the dataset,
 adjusting the scores linearly.
-
-<br><br> Prerequisites: 
-<br> - The input processedDocuments must come from the plugin calculateTfIdf
-<br> - Scripts wherein this plugin is called must be type="module"
 </div>
 
 
@@ -1524,7 +1446,7 @@ adjusting the scores linearly.
 
             
 
-            <td class="description last">An array of objects, each representing a document's term scores.</td>
+            <td class="description last">An array of objects, each representing a document's term scores</td>
         </tr>
 
     
@@ -1565,7 +1487,7 @@ adjusting the scores linearly.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line357">line 357</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line344">line 344</a>
     </li></ul></dd>
     
 
@@ -1594,7 +1516,7 @@ adjusting the scores linearly.
 
         
 <div class="param-desc">
-    An array of objects with each term's score normalized to the range [0, 1].
+    An array of objects with each term's score normalized to the range [0, 1]
 </div>
 
 
@@ -1618,7 +1540,7 @@ adjusting the scores linearly.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// Call normalizeTfIdfScores for a set of tokens and their respective tfIdf scores
+    <pre class="prettyprint"><code>// Call normalizeTfIdfScores for a set of tokens and their respective TF-IDF scores
 const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code></pre>
 
 
@@ -1627,9 +1549,9 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
             
 
     
-
 <div class="thick-line"></div>
-    <h4 class="name" id="searchWords"><span class="type-signature">(async) </span>searchWords<span class="signature">(tokens, keyWords, language<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+    <h4 class="name" id="searchWords"><span class="type-signature">(async) </span>searchWords<span class="signature">(tokens, keyWords, language)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
 
     
@@ -1637,9 +1559,7 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
 
 
 <div class="description">
-    A function that searches for one or more keywords in an array of tokens.
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+    A plugin that searches for one or more keywords (an array of strings) in an array of tokens.
 </div>
 
 
@@ -1662,8 +1582,6 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
 
         <th>Type</th>
 
-        
-        <th>Attributes</th>
         
 
         
@@ -1692,14 +1610,6 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -1726,14 +1636,6 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -1762,26 +1664,16 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
                 
-                    'en'
+                    en
                 
                 </td>
             
 
-            <td class="description last">Language of tokens, 'sv' or 'en'</td>
+            <td class="description last">of tokens, 'sv' or 'en', defaults to 'en'</td>
         </tr>
 
     
@@ -1822,7 +1714,7 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line166">line 166</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -1851,7 +1743,7 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
 
         
 <div class="param-desc">
-    Returns array of keywords found in array of tokens
+    Returns an array of keywords found in the given array of tokens
 </div>
 
 
@@ -1876,7 +1768,7 @@ const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);</code><
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// Search for multiple keywords in tokens, language set to swedish
-const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code></pre>
+const foundWords = await searchWords(tokens, ['hej', 'världen'], 'sv'); </code></pre>
 
 
 
@@ -1886,7 +1778,7 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
     
 
 <div class="thick-line"></div>
-    <h4 class="name" id="sort"><span class="type-signature">(async) </span>sort<span class="signature">(tokens, sortType<span class="signature-attributes">opt</span>, order<span class="signature-attributes">opt</span>, wordFrequencies<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Map}</span></h4>
+    <h4 class="name" id="sort"><span class="type-signature">(async) </span>sort<span class="signature">(tokens, sortType, order, wordFrequencies<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Map}</span></h4>
     
 
     
@@ -1894,11 +1786,9 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
 
 
 <div class="description">
-    A function that sorts an array of tokens based on the specified criteria; 'alphabetically', 'frequency' or 'TF-IDF score'.
-<br>Note! TF-IDF based sorting computes and sorts by non-normalized TF-IDF scores -> sort for a corpus will sort after 
+    A plugin that sorts an array of tokens based on the specified criteria; 'alphabetically', 'frequency' or 'TF-IDF score'.
+<br> <strong> Note!</strong> TF-IDF based sorting computes and sorts by non-normalized TF-IDF scores -> sort for a corpus will sort after 
 <br>TF-IDF scores within each separate document or token array
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
 </div>
 
 
@@ -1988,8 +1878,6 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -2000,12 +1888,12 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
             
                 <td class="default">
                 
-                    "alphabetically"
+                    alphabetically
                 
                 </td>
             
 
-            <td class="description last">Sort type: "alphabetically", "frequency" or "tfIdfScore".</td>
+            <td class="description last">Sort type: 'alphabetically', 'frequency' or 'tfIdfScore', defaults to 'alphabeticaly'</td>
         </tr>
 
     
@@ -2027,8 +1915,6 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -2039,12 +1925,12 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
             
                 <td class="default">
                 
-                    "ascending"
+                    ascending
                 
                 </td>
             
 
-            <td class="description last">Sort order: "ascending" or "descending". Defaults to "ascending".</td>
+            <td class="description last">Sort order: 'ascending' or 'descending', defaults to 'ascending'</td>
         </tr>
 
     
@@ -2081,7 +1967,7 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
                 </td>
             
 
-            <td class="description last">Map of word frequencies. If not provided, sort function will compute frequencies.</td>
+            <td class="description last">Map of word frequencies. If not provided, sort function will compute frequencies</td>
         </tr>
 
     
@@ -2122,7 +2008,7 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line879">line 879</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line862">line 862</a>
     </li></ul></dd>
     
 
@@ -2151,7 +2037,7 @@ const foundWords = await searchWords(tokens, ['hello', 'world'], 'sv'); </code><
 
         
 <div class="param-desc">
-    - Map of sorted tokens and their values TF-IDF score or frequency, depending on sorting type
+    Map of sorted tokens and their values TF-IDF score or frequency, depending on sorting type
 </div>
 
 
@@ -2186,7 +2072,7 @@ const sortedTokens = await sort(tokens, 'frequency', 'descending');</code></pre>
     
 <div class="thick-line"></div>
     
-    <h4 class="name" id="stem"><span class="type-signature">(async) </span>stem<span class="signature">(word, language)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="table"><span class="type-signature">(async) </span>table<span class="signature">(tokensOrPath, containerId, language, sortType, order, keywords, exp, shadowOn)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
 
     
@@ -2194,206 +2080,14 @@ const sortedTokens = await sort(tokens, 'frequency', 'descending');</code></pre>
 
 
 <div class="description">
-    A function that applies a very basic stemming algorithm to reduce words to their stem.
-<br>This is a rudimentary approach; for accurate stemming, use a dedicated library.
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>word</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The word to stem.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>language</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The language of the word ('en' or 'sv').</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line936">line 936</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - The stemmed word.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// Call stem for a word in swedish 
-const stemmedWord = await stem(word, 'sv'); </code></pre>
-
-
-
-        
-            
-
-    
-<div class="thick-line"></div>
-    
-    <h4 class="name" id="table"><span class="type-signature">(async) </span>table<span class="signature">(tokensOrPath, language<span class="signature-attributes">opt</span>, containerId, sortType<span class="signature-attributes">opt</span>, order<span class="signature-attributes">opt</span>, keywords, export<span class="signature-attributes">opt</span>, shadowOn<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    A plugin that renders a table from an array of tokens or an array of txt files.
+    A plugin that renders a table from an array of tokens or an array of text file paths.
 <br>- Sort the table by frequency, alphabetically or from TF-IDF scores, ascending or descending.
 <br>- Download the table from browser as excel file with the export argument set to true.
 
-<br><br>TF-IDF scores are normalized if more than one txt file or token arrays have been provided. 
+<br><br>TF-IDF scores are normalized if more than one text file or token array have been provided. 
 
-<br><br>Prerequisites: 
-<br> - A div container with given dimensions
-<br> - Scripts wherein this plugin is called must be of modular type; script type="module"Scripts wherein this plugin is called must be type="module"
+<br><br> <strong> Prerequisites: </strong>
+<br> - A div container with an ID to place the table in.
 </div>
 
 
@@ -2416,8 +2110,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
 
         <th>Type</th>
 
-        
-        <th>Attributes</th>
         
 
         
@@ -2446,14 +2138,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -2462,45 +2146,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             
 
             <td class="description last">Array of token arrays or paths to txt files</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>language</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'en'
-                
-                </td>
-            
-
-            <td class="description last">Language of the txt file</td>
         </tr>
 
     
@@ -2520,14 +2165,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -2536,6 +2173,35 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             
 
             <td class="description last">The name of the container to hold the table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    en
+                
+                </td>
+            
+
+            <td class="description last">Language of the text file, defaults to 'en'</td>
         </tr>
 
     
@@ -2555,26 +2221,16 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
                 
-                    'alphabetically'
+                    frequency
                 
                 </td>
             
 
-            <td class="description last">Sort type: 'alphabetically', 'frequency' or 'tfIdfScore'.</td>
+            <td class="description last">Sort type: 'alphabetically', 'frequency' or 'tfIdfScore', defaults to 'alphabetically'</td>
         </tr>
 
     
@@ -2594,26 +2250,16 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
                 
-                    'ascending'
+                    descending
                 
                 </td>
             
 
-            <td class="description last">Sort order: 'ascending' or 'descending'.</td>
+            <td class="description last">Sort order: 'ascending' or 'descending', defaults to 'ascending'</td>
         </tr>
 
     
@@ -2633,14 +2279,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -2648,14 +2286,14 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
                 </td>
             
 
-            <td class="description last">Array of words to search for and display in the table</td>
+            <td class="description last">Array of words to search for and display in the table, can be left empty []</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>export</code></td>
+                <td class="name"><code>exp</code></td>
             
 
             <td class="type">
@@ -2668,16 +2306,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -2687,7 +2315,7 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
                 </td>
             
 
-            <td class="description last">Boolean variable that will export the table to an excel file if set to true</td>
+            <td class="description last">Boolean variable that will export the table to an excel file if set to true, defaults to false</td>
         </tr>
 
     
@@ -2707,16 +2335,6 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
@@ -2726,7 +2344,7 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
                 </td>
             
 
-            <td class="description last">Boolean variable to turn shadow styles on or off, off by default</td>
+            <td class="description last">Boolean variable to turn shadow styles on or off, false=off by default</td>
         </tr>
 
     
@@ -2767,7 +2385,7 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line991">line 991</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line930">line 930</a>
     </li></ul></dd>
     
 
@@ -2820,7 +2438,7 @@ const stemmedWord = await stem(word, 'sv'); </code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// Call table with tokens, language set to english, sort by TF-IDF scores ascending, keywords to search for and export to excel=true
+    <pre class="prettyprint"><code>// Call table with tokens, language set to english, sort by TF-IDF scores ascendingly, keywords to search for and export to excel=true
 table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true); </code></pre>
 
 
@@ -2839,10 +2457,8 @@ table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true);
 
 
 <div class="description">
-    A plugin that tokenizes the content of a text file, and removing common words based on the specified 
-<br>language: english or swedish
-
-<br><br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+    A plugin that tokenizes the content of a text file and removes common words in the process 
+<br>based on the specified language: english or swedish.
 </div>
 
 
@@ -2929,7 +2545,7 @@ table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true);
                 </td>
             
 
-            <td class="description last">Language of the text ('en' or 'sv'). Defaults to 'en'.</td>
+            <td class="description last">Language of the text, 'en' or 'sv'. Defaults to 'en'.</td>
         </tr>
 
     
@@ -2970,7 +2586,7 @@ table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line126">line 126</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
@@ -3034,7 +2650,7 @@ const tokens = await tokenize(path, 'en'); </code></pre>
     
 
 <div class="thick-line"></div>
-    <h4 class="name" id="treemap"><span class="type-signature">(async) </span>treemap<span class="signature">(tokensOrPath, containerId, language<span class="signature-attributes">opt</span>, keywords, useTFIDF<span class="signature-attributes">opt</span>, shadowOn<span class="signature-attributes">opt</span>, cap<span class="signature-attributes">opt</span>, colorPalette<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="treemap"><span class="type-signature">(async) </span>treemap<span class="signature">(tokensOrPath, containerId, Language, keywords, useTFIDF, shadowOn, cap, colorPalette<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
 
     
@@ -3042,15 +2658,14 @@ const tokens = await tokenize(path, 'en'); </code></pre>
 
 
 <div class="description">
-    A plugin that renders a treemap from an array of token arrays or an array of text file paths
- <br>- a list of keywords can be searched for via the keywords input
- <br>- TF-IDF scores can be computed setting useTFIDF to true -> if more than one token array or text file, 
- <br>normalized scores over entire corpus will be computed, else scores over the single document are computed 
+    A plugin that renders a treemap from an array of token arrays or an array of text file paths.
+ <br>- A list of keywords can be searched for via the keywords input.
+ <br>- TF-IDF scores can be computed by setting useTFIDF to true -> if more than one token array or text file, 
+ <br>normalized scores over entire corpus will be computed, else scores over the single document are computed. 
 <br> Treemap also returns found keywords in an array, the array is empty if no keywords were found
 
-<br><br> Prerequisites: 
-<br> - A div container with an ID, to place the treemap in 
-<br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+<br><br><strong> Prerequisites: </strong> 
+<br> - A div container with an ID, to place the treemap in.
 </div>
 
 
@@ -3160,7 +2775,7 @@ const tokens = await tokenize(path, 'en'); </code></pre>
 
         <tr>
             
-                <td class="name"><code>language</code></td>
+                <td class="name"><code>Language</code></td>
             
 
             <td class="type">
@@ -3175,8 +2790,6 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -3187,12 +2800,10 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="default">
                 
-                    'en'
-                
                 </td>
             
 
-            <td class="description last">Language of the txt file, 'en' or 'sv'</td>
+            <td class="description last">Language of the txt file, 'en' or 'sv', defaults to 'en'</td>
         </tr>
 
     
@@ -3227,7 +2838,7 @@ const tokens = await tokenize(path, 'en'); </code></pre>
                 </td>
             
 
-            <td class="description last">Array of words to search for</td>
+            <td class="description last">Array of words to search for, can be left empty []</td>
         </tr>
 
     
@@ -3249,8 +2860,6 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -3261,12 +2870,10 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="default">
                 
-                    false
-                
                 </td>
             
 
-            <td class="description last">Boolean for activating TF-IDF computations</td>
+            <td class="description last">Boolean for activating TF-IDF computations, defaults to false</td>
         </tr>
 
     
@@ -3288,8 +2895,6 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -3300,12 +2905,10 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="default">
                 
-                    false
-                
                 </td>
             
 
-            <td class="description last">Boolean for activating shadows on the treemap</td>
+            <td class="description last">Boolean for activating shadows on the treemap, defaults to false</td>
         </tr>
 
     
@@ -3327,8 +2930,6 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -3339,12 +2940,10 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="default">
                 
-                    1
-                
                 </td>
             
 
-            <td class="description last">Integer than limits words displayed in treemap based on count</td>
+            <td class="description last">Integer than limits words displayed in treemap based on count, defaults to 1</td>
         </tr>
 
     
@@ -3378,7 +2977,7 @@ const tokens = await tokenize(path, 'en'); </code></pre>
             
                 <td class="default">
                 
-                    ['#deebf7', '#9ecae1', '#3182bd']
+                    ['#A6CEE3', '#63A3CC','#1F78B4']
                 
                 </td>
             
@@ -3424,7 +3023,7 @@ const tokens = await tokenize(path, 'en'); </code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line415">line 415</a>
+        <a href="textVisBundle.js.html">textVisBundle.js</a>, <a href="textVisBundle.js.html#line404">line 404</a>
     </li></ul></dd>
     
 
@@ -3477,7 +3076,7 @@ const tokens = await tokenize(path, 'en'); </code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// Call treemap with array of token arrays, language set to english, an array with keys to search for and useTFIDF=true
+    <pre class="prettyprint"><code>// Call treemap with an array of token arrays, language set to english, an array with keys to search for and useTFIDF=true
 treemap([tokens1, tokens2], 'container', 'en', ['hello', 'world'], true); 
 
 // Call treemap with array of text file paths, language set to swedish, an array of keys to search for and useTFIDF=false
@@ -3500,14 +3099,14 @@ treemap([path1, path2], 'container', 'sv', ['hej', 'världen'], false); </code><
 
 </div>
 
-<nav id = "sideBar">
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#barchart">barchart</a></li><li><a href="global.html#linechart">linechart</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#treemap">treemap</a></li><br><li><a href="global.html#calculateTfIdf">calculateTfIdf</a></li><li><a href="global.html#countWords">countWords</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#normalizeTfIdfScores">normalizeTfIdfScores</a></li><li><a href="global.html#searchWords">searchWords</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#tokenize">tokenize</a></li></ul>
+<nav id="sideBar">
+    <h2><a href="index.html">Home</a></h2><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#barchart">barchart</a></li><li><a href="global.html#calculateTfIdf">calculateTfIdf</a></li><li><a href="global.html#countWords">countWords</a></li><li><a href="global.html#linechart">linechart</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#normalizeTfIdfScores">normalizeTfIdfScores</a></li><li><a href="global.html#searchWords">searchWords</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#tokenize">tokenize</a></li><li><a href="global.html#treemap">treemap</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 30 2024 08:50:21 GMT+0200 (centraleuropeisk sommartid)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 06 2024 19:46:07 GMT+0200 (centraleuropeisk sommartid)
 </footer>
 
 <script> prettyPrint(); </script>

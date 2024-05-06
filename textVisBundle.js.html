@@ -28,19 +28,17 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * @description
- * A plugin that computes the count of each individual token and the total amount of tokens
- * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * A plugin that computes the count of each individual token and the total amount of tokens from an array of tokens.
  * 
  * @example
  * // Call countWords for a token array
- * const {wordCount, totalWordCount} = await countWords(tokens)
+ * const {wordCount, totalWordCount} = await countWords(tokens);
  *
  * @async
  * 
  * @param {Array} tokens - Array of tokenized text 
  * @returns {Map} - Map of tokens and count of each token 
- * @returns {Number} - Total word count
+ * @returns {Number} - Total word count (total number of tokens)
  */
 async function countWords(tokens) {
   if (!tokens || tokens.length === 0) {
@@ -62,9 +60,7 @@ async function countWords(tokens) {
 
 /**
  * @description
- * A function that normalizes text by converting it to lowercase and removing punctuation.
- * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * A plugin that normalizes text by converting it to lowercase and removing special characters.
  * 
  * @example 
  * // Call normalize for text in english 
@@ -72,12 +68,12 @@ async function countWords(tokens) {
  * 
  * @async
  * 
- * @param {string} text - The text to normalize.
- * @param {string} language - The language of the text ('en' or 'sv').
- * @returns {string} - The normalized text.
+ * @param {string} text - The text to normalize
+ * @param {string} language - The language of the text ('en' or 'sv')
+ * @returns {string} - The normalized text
  */
-async function normalize(text, language) {
-    // This basic normalization will be similar for English and Swedish.
+async function normalize(text, language = 'en') {
+    // This basic normalization will be similar for English and Swedish
     text = text.toLowerCase();
     text = text.replace(/[\.,-\/#!$%\^&amp;\*;:{}=\-_`~()]/g, " "); // Remove common punctuation.
     text = text.replace(/\s{2,}/g, " "); // Replace multiple spaces with a single space.
@@ -136,10 +132,8 @@ async function readTextFile(path) {
 
 /**
  * @description
- * A plugin that tokenizes the content of a text file, and removing common words based on the specified 
- * &lt;br>language: english or swedish
- * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * A plugin that tokenizes the content of a text file and removes common words in the process 
+ * &lt;br>based on the specified language: english or swedish.
  * 
  * @example 
  * // Call tokenize for a text file in english
@@ -148,7 +142,7 @@ async function readTextFile(path) {
  * @async
  * 
  * @param {string} filePath - Path to the text file.
- * @param {string} language - Language of the text ('en' or 'sv'). Defaults to 'en'.
+ * @param {string} language - Language of the text, 'en' or 'sv'. Defaults to 'en'.
  * @returns {Promise&lt;Array&lt;string>>} - An array of tokens.
  */
 async function tokenize(filePath, language = 'en') {
@@ -176,9 +170,7 @@ async function tokenize(filePath, language = 'en') {
 
 /**
  * @description
- * A function that searches for one or more keywords in an array of tokens.
- * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
+ * A plugin that searches for one or more keywords (an array of strings) in an array of tokens.
  * 
  * @example 
  * // Search for multiple keywords in tokens, language set to swedish
@@ -188,10 +180,10 @@ async function tokenize(filePath, language = 'en') {
  * 
  * @param {Array} tokens Array of tokens 
  * @param {Array} keyWords Array of keywords to search for 
- * @param {String} [language='en'] Language of tokens, 'sv' or 'en'
- * @returns {Array} Returns array of keywords found in array of tokens 
+ * @param {String} language of tokens, 'sv' or 'en', defaults to 'en'
+ * @returns {Array} Returns an array of keywords found in the given array of tokens 
  */
-async function searchWords(tokens, keyWords, language) {
+async function searchWords(tokens, keyWords, language = 'en') {
 
     // AUX function to generate variations of a keyword
     const generateVariations = (keyword) => {
@@ -319,19 +311,17 @@ async function inverseDocumentFrequency(term, allTokens) {
  * A plugin that processes an array of documents to calculate and sort TF-IDF scores for each term.
  * &lt;br>Optionally extracts the top N terms based on TF-IDF scores.
  * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
- * 
  * @example
  * // Call calcualteTfIdf for an array of documents in english
  * const tfIdfScores = await calculateTfIdf(documentsArray, 'en'); 
  * 
  * @async
  * 
- * @param {Array&lt;string|string[]>} allDocuments - An array of documents or arrays of tokens.
- * @param {string} language - The language for tokenization, if necessary.
- * @param {number} [N] - Optional. The number of top terms to retain for each document.
- * @returns {Promise&lt;Array&lt;Object[]>>} - A promise that resolves to an array of sorted terms with their scores,
- *                                       or the top N terms if N is provided.
+ * @param {Array&lt;string|string[]>} allDocuments An array of documents or arrays of tokens
+ * @param {string} language The language for tokenization, if necessary
+ * @param {number} Optional. The number of top terms to retain for each document
+ * @returns {Promise&lt;Array&lt;Object[]>>} A promise that resolves to an array of sorted terms with their scores,
+ *                                       or the top N terms if N is provided
  */
 async function calculateTfIdf(allDocuments, language = 'en', N = null) {
   const processedDocuments = await Promise.all(allDocuments.map(async (doc) => {
@@ -361,67 +351,66 @@ async function calculateTfIdf(allDocuments, language = 'en', N = null) {
 
 /**
  * @description
- * A plugin that ormalizes TF-IDF scores in the range of [0, 1] using min-max scaling.
+ * A plugin that normalizes TF-IDF scores in the range of [0, 1] using min-max scaling.
  * 
- * This function takes an array of processed documents, each containing term scores,
+ * This plugin takes an array of processed documents, each containing term scores &lt;strong>from calculateTfIdf &lt;/strong>,
  * and scales these scores so that they fall within the range of [0, 1]. This
  * normalization is based on the minimum and maximum scores found in the dataset,
  * adjusting the scores linearly.
- * 
- * &lt;br>&lt;br> Prerequisites: 
- * &lt;br> - The input processedDocuments must come from the plugin calculateTfIdf
- * &lt;br> - Scripts wherein this plugin is called must be type="module"
+
  * 
  * @async
  * 
  * @example 
- * // Call normalizeTfIdfScores for a set of tokens and their respective tfIdf scores
+ * // Call normalizeTfIdfScores for a set of tokens and their respective TF-IDF scores
  * const normalizedScores = await normalizeTfIdfScores(tokens_with_scores);
  * 
  *
- * @param {Array&lt;Object>} processedDocuments - An array of objects, each representing a document's term scores.
- * @returns {Array&lt;Object>} An array of objects with each term's score normalized to the range [0, 1].
+ * @param {Array&lt;Object>} processedDocuments - An array of objects, each representing a document's term scores
+ * @returns {Array&lt;Object>} An array of objects with each term's score normalized to the range [0, 1]
  */
 async function normalizeTfIdfScores(processedDocuments) {
-  // Flatten the array of arrays to get all TF-IDF score objects
-  const allScores = processedDocuments.flat();
-
-  let minScore = Infinity, maxScore = -Infinity;
-
-  // Determine the minimum and maximum scores
-  allScores.forEach(scoreObj => {
-      if (scoreObj.score &lt; minScore) minScore = scoreObj.score;
-      if (scoreObj.score > maxScore) maxScore = scoreObj.score;
-  });
-
-  // Calculate the range
-  const range = maxScore - minScore;
-
-  // Normalize the scores to the range [0, 1]
-  const normalizedScores = allScores.map(scoreObj => {
-      const normalizedScore = (scoreObj.score - minScore) / range;
-      return { term: scoreObj.term, score: normalizedScore };
-  });
-
-  return normalizedScores;
-}
+    // Flatten the array of arrays to get all TF-IDF score objects
+    const allScores = processedDocuments.flat();
+  
+    let minScore = Infinity, maxScore = -Infinity;
+  
+    // Determine the minimum and maximum scores
+    allScores.forEach(scoreObj => {
+        if (scoreObj.score &lt; minScore) minScore = scoreObj.score;
+        if (scoreObj.score > maxScore) maxScore = scoreObj.score;
+    });
+  
+    // Calculate the range
+    const range = maxScore - minScore;
+  
+    // Normalize the scores to the range [0, 1]
+    const normalizedScores = allScores.map(scoreObj => {
+        const normalizedScore = (scoreObj.score - minScore) / range;
+        return { term: scoreObj.term, score: normalizedScore };
+    });
+  
+    return normalizedScores;
+  }
+  
+  
 /******************************************************************************************** */
 
 /**
  * 
  * @description
- * A plugin that renders a treemap from an array of token arrays or an array of text file paths
- *  &lt;br>- a list of keywords can be searched for via the keywords input
- *  &lt;br>- TF-IDF scores can be computed setting useTFIDF to true -> if more than one token array or text file, 
- *  &lt;br>normalized scores over entire corpus will be computed, else scores over the single document are computed 
+ * A plugin that renders a treemap from an array of token arrays or an array of text file paths.
+ *  &lt;br>- A list of keywords can be searched for via the keywords input.
+ *  &lt;br>- TF-IDF scores can be computed by setting useTFIDF to true -> if more than one token array or text file, 
+ *  &lt;br>normalized scores over entire corpus will be computed, else scores over the single document are computed. 
  * &lt;br> Treemap also returns found keywords in an array, the array is empty if no keywords were found
  * 
- * &lt;br>&lt;br> Prerequisites: 
- * &lt;br> - A div container with an ID, to place the treemap in 
- * &lt;br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
+ * &lt;br>&lt;br>&lt;strong> Prerequisites: &lt;/strong> 
+ * &lt;br> - A div container with an ID, to place the treemap in. 
+ 
  * 
  * @example
- * // Call treemap with array of token arrays, language set to english, an array with keys to search for and useTFIDF=true
+ * // Call treemap with an array of token arrays, language set to english, an array with keys to search for and useTFIDF=true
  * treemap([tokens1, tokens2], 'container', 'en', ['hello', 'world'], true); 
  * 
  * // Call treemap with array of text file paths, language set to swedish, an array of keys to search for and useTFIDF=false
@@ -432,16 +421,15 @@ async function normalizeTfIdfScores(processedDocuments) {
  * 
  * @param {Array} tokensOrPath Array of token arrays or paths to txt files 
  * @param {String} containerId The name of the container to hold the treemap 
- * @param {String} [language='en'] Language of the txt file, 'en' or 'sv'
- * @param {Array} keywords Array of words to search for
- * @param {Boolean} [useTFIDF = false] Boolean for activating TF-IDF computations
- * @param {Boolean} [shadowOn = false] Boolean for activating shadows on the treemap
- * @param {Number} [cap = 1] Integer than limits words displayed in treemap based on count 
- * @param {Array} [colorPalette = ['#deebf7', '#9ecae1', '#3182bd']] Array of hex colors for the treemap 
+ * @param {String} Language Language of the txt file, 'en' or 'sv', defaults to 'en'
+ * @param {Array} keywords Array of words to search for, can be left empty []
+ * @param {Boolean} useTFIDF Boolean for activating TF-IDF computations, defaults to false
+ * @param {Boolean} shadowOn Boolean for activating shadows on the treemap, defaults to false
+ * @param {Number} cap Integer than limits words displayed in treemap based on count, defaults to 1
+ * @param {Array} [colorPalette = ['#A6CEE3', '#63A3CC','#1F78B4']] Array of hex colors for the treemap 
  * @returns {Array} An array of found keywords, will be 0 if no keywords were found
  */
-async function treemap(tokensOrPath, containerId, language = 'en', keywords = [],
-    useTFIDF = false, shadowOn = false, cap = 1, colorPalette = ['#deebf7', '#9ecae1', '#3182bd']) {
+async function treemap(tokensOrPath, containerId, language = 'en', keywords = [], useTFIDF = false, shadowOn = false, cap = 1, colorPalette = ['#A6CEE3', '#63A3CC','#1F78B4']) {
 
     // Import required scripts
     const script1 = document.createElement('script');
@@ -472,10 +460,11 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
 
     // Handle tokenization
     const tokens = await performTokenization(tokensOrPath, language);
+    keywords = keywords || false;
 
-    // Search for key words using the searchWords plugin 
-    const foundWords = await keywordSearch(tokens, keywords, language);
-    if (foundWords.length === 0) {
+    //Search for key words using the searchWords plugin 
+    const foundWords = keywords ? await keywordSearch(tokens, keywords, language) : [];
+    if (keywords &amp;&amp; foundWords.length === 0) {
         alert('None of the specified keywords were found');
     }
 
@@ -511,7 +500,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
     // Define CSS for highlighted class
     const highlightedCss = `
         .highlighted {
-            fill: grey !important; 
+            opacity: 0.5 !important; 
         }
     `;
 
@@ -540,8 +529,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
         .attr("font-size", "30px")
         .attr("font-weight", "bold")
         .attr("fill", "#333")
-        .style("filter", "drop-shadow(1px 1px 1px #000000")
-        .text("TextVis Treemap Visualization");
+        .style("filter", "drop-shadow(1px 1px 1px #000000");
 
     const cellGroup = svg_tree.append('g');
 
@@ -567,7 +555,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
         .attr("height", function (d) { return d.y1 - d.y0; })
         .attr("fill", function (d) { return colorScale(d.value); })
         .attr("stroke", "black")
-        .attr("stroke-width", 4);
+        .attr("stroke-width", 2);
 
     // Append rectangles for remaining cells 
     const regularCells = cells.filter(d => !foundWords.includes(d.data.key.toLowerCase()));
@@ -656,7 +644,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
             .select("rect")
             .transition()
             .duration(2000)
-            .attr("fill", "red");
+            .attr("fill", "#FF7F00");
     }
 
     // Call zooming functionality 
@@ -735,6 +723,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
         // Calculate TF-IDF scores
         const tfIdfScores = await calculateTfIdf(tokensOrPath, language);
         const normalizedScores = await normalizeTfIdfScores(tfIdfScores);
+        console.log("normalized scores: ", normalizedScores); 
 
         // Create a map of terms to their TF-IDF scores
         tfIdfMap = new Map(normalizedScores.map(({ term, score }) => [term, score]));
@@ -749,6 +738,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
             .attr("fill", function (d) {
                 return colorScale(tfIdfMap.has(d.data.key) ? tfIdfMap.get(d.data.key) : 0);
             });
+
     } else if (useTFIDF) {
 
         // Calculate TF-IDF scores
@@ -796,11 +786,6 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
                 pointer-events: auto; 
             }
     
-            /* Add transition effect to cells */
-            .node rect {
-                transition: opacity 0.3s ease;
-            }
-    
             /* Add rounded corners and drop shadow on cells */
             .node rect {
                 rx: 5px;
@@ -822,7 +807,7 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
         // Define CSS for highlighted class
         const shadowStyle = `
             .node rect {
-            filter: drop-shadow(2px 2px 2px #000000);
+            filter: drop-shadow(2px 2px 2px #AAA);
             }
         `;
 
@@ -886,11 +871,9 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
 
 /**
  * @description
- * A function that sorts an array of tokens based on the specified criteria; 'alphabetically', 'frequency' or 'TF-IDF score'.
- * &lt;br>Note! TF-IDF based sorting computes and sorts by non-normalized TF-IDF scores -> sort for a corpus will sort after 
+ * A plugin that sorts an array of tokens based on the specified criteria; 'alphabetically', 'frequency' or 'TF-IDF score'.
+ * &lt;br> &lt;strong> Note!&lt;/strong> TF-IDF based sorting computes and sorts by non-normalized TF-IDF scores -> sort for a corpus will sort after 
  * &lt;br>TF-IDF scores within each separate document or token array
- * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
  * 
  * @example
  * // Sort tokens by descending frequency
@@ -898,11 +881,11 @@ async function treemap(tokensOrPath, containerId, language = 'en', keywords = []
  * 
  * @async
  * 
- * @param {array} tokens - Array of tokens to be sorted.
- * @param {string} [sortType="alphabetically"] - Sort type: "alphabetically", "frequency" or "tfIdfScore". 
- * @param {string} [order="ascending"] - Sort order: "ascending" or "descending". Defaults to "ascending".
- * @param {Map} [wordFrequencies] - Map of word frequencies. If not provided, sort function will compute frequencies.
- * @returns {Map} - Map of sorted tokens and their values TF-IDF score or frequency, depending on sorting type
+ * @param {array} tokens Array of tokens to be sorted.
+ * @param {string} sortType Sort type: 'alphabetically', 'frequency' or 'tfIdfScore', defaults to 'alphabeticaly'
+ * @param {string} order Sort order: 'ascending' or 'descending', defaults to 'ascending'
+ * @param {Map} [wordFrequencies] Map of word frequencies. If not provided, sort function will compute frequencies
+ * @returns {Map} Map of sorted tokens and their values TF-IDF score or frequency, depending on sorting type
  */
 async function sort(tokens, sortType = "alphabetically", order = "ascending", wordFrequencies) {
     // Copy of tokens
@@ -944,80 +927,36 @@ async function sort(tokens, sortType = "alphabetically", order = "ascending", wo
 }
 /******************************************************************************************** */
 
-/**
- * @description
- * A function that applies a very basic stemming algorithm to reduce words to their stem.
- * &lt;br>This is a rudimentary approach; for accurate stemming, use a dedicated library.
- * 
- * &lt;br>&lt;br> Prerequisites: Scripts wherein this plugin is called must be type="module"
- * 
- * @example
- * // Call stem for a word in swedish 
- * const stemmedWord = await stem(word, 'sv'); 
- * 
- * @async
- * 
- * @param {string} word - The word to stem.
- * @param {string} language - The language of the word ('en' or 'sv').
- * @returns {string} - The stemmed word.
- */
-function stem(word, language) {
-    if (language === 'en') {
-      const enSuffixes = ['ing', 'ly', 'ed', 'ious', 'ies', 'ive', 'es', 's', 'ment'];
-      return applyStemmingRules(word, enSuffixes);
-    } else if (language === 'sv') {      
-      const svSuffixes = ['ing', 'ligt', 'ade', 'dd', 'tt', 's', 'en', 'ar', 'or'];
-      return applyStemmingRules(word, svSuffixes);
-    } else {
-      console.error('Unsupported language for stemming.');
-      return word;
-    }
-  }
-  
-  
-  // AUX function that applies stemming rules based on language-specific suffixes
-  function applyStemmingRules(word, suffixes) {
-    let stem = word;
-    suffixes.some(suffix => {
-      if (word.endsWith(suffix)) {
-        stem = word.slice(0, -suffix.length);
-        return true; // Stops the loop once a suffix match is found.
-      }
-      return false;
-    });
-    return stem;
-  }
-  /******************************************************************************************** */
 
 /**
  * @description
- * A plugin that renders a table from an array of tokens or an array of txt files.
+ * A plugin that renders a table from an array of tokens or an array of text file paths.
  * &lt;br>- Sort the table by frequency, alphabetically or from TF-IDF scores, ascending or descending.
  * &lt;br>- Download the table from browser as excel file with the export argument set to true.
  * 
- * &lt;br>&lt;br>TF-IDF scores are normalized if more than one txt file or token arrays have been provided. 
+ * &lt;br>&lt;br>TF-IDF scores are normalized if more than one text file or token array have been provided. 
  * 
- * &lt;br>&lt;br>Prerequisites: 
- * &lt;br> - A div container with given dimensions
- * &lt;br> - Scripts wherein this plugin is called must be of modular type; script type="module"Scripts wherein this plugin is called must be type="module"
+ * &lt;br>&lt;br> &lt;strong> Prerequisites: &lt;/strong>
+ * &lt;br> - A div container with an ID to place the table in.
+ * 
  * @example
- * // Call table with tokens, language set to english, sort by TF-IDF scores ascending, keywords to search for and export to excel=true
+ * // Call table with tokens, language set to english, sort by TF-IDF scores ascendingly, keywords to search for and export to excel=true
  * table(tokens, 'container', 'tfIdfScore', 'ascending', ['hello', 'world'], true); 
  * 
  * @async
  * 
  * @param {Array} tokensOrPath Array of token arrays or paths to txt files 
- * @param {String} [language='en'] Language of the txt file
  * @param {String} containerId The name of the container to hold the table
- * @param {String} [sortType='alphabetically'] Sort type: 'alphabetically', 'frequency' or 'tfIdfScore'. 
- * @param {String} [order='ascending'] Sort order: 'ascending' or 'descending'.
- * @param {Array} keywords Array of words to search for and display in the table
- * @param {Boolean} [export=false] Boolean variable that will export the table to an excel file if set to true
- * @param {Boolean} [shadowOn = false] Boolean variable to turn shadow styles on or off, off by default
+ * @param {String} language Language of the text file, defaults to 'en'
+ * @param {String} sortType Sort type: 'alphabetically', 'frequency' or 'tfIdfScore', defaults to 'alphabetically'
+ * @param {String} order Sort order: 'ascending' or 'descending', defaults to 'ascending'
+ * @param {Array} keywords Array of words to search for and display in the table, can be left empty []
+ * @param {Boolean} exp Boolean variable that will export the table to an excel file if set to true, defaults to false
+ * @param {Boolean} shadowOn Boolean variable to turn shadow styles on or off, false=off by default
  * @returns {Array} Array of tokens, tokens + count or tokens + TF-IDF scores returned, depending on sortType 
  */
-async function table(tokensOrPath, language = 'en', containerId, sortType = 'alphabetically',
-    order = 'ascending', keywords = [], exoport = false, shadowOn = false) {
+async function table(tokensOrPath, containerId, language = 'en', sortType = 'frequency',
+    order = 'descending', keywords = [], exp = false, shadowOn = false) {
 
     if (tokensOrPath.length === 0) {
         alert("Tokens are required for creating a table.");
@@ -1029,10 +968,11 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
 
     // If array of keywords is provided, search for keywords to display 
     let useTokens = tokens;
+    keywords = keywords || false;
     if (keywords &amp;&amp; keywords.length > 0) {
         useTokens = await searchWords(tokens, keywords, language || []);
 
-    } else if (keywords.length === 0) {
+    } else if (keywords &amp;&amp; keywords.length === 0) {
         alert('No keywords to search for provided.');
     }
 
@@ -1086,13 +1026,18 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
 
     // Select the container element
     const container = d3.select(`#${containerId}`);
+    const containerDOM = document.getElementById(containerId);
+    const tableHeight = containerDOM.offsetHeight*0.9;
 
     // Append styles to the container
     container.append('style').text(`
     .table-container {
-        max-height: 600; 
+        max-height:` + tableHeight + `px;
         overflow-y: auto;
-        border: 2px solid #3498db; 
+        font-size: 12px;
+        border: 2px solid #1F78B4; 
+        border-radius: 4px; 
+        font-family: sans-serif;
     }
 
     .bodyTable {
@@ -1111,7 +1056,7 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
         position: sticky;
         top: 0;
         z-index: 1;
-        background-color: #3498db; 
+        background-color: #1F78B4; 
         color: #ffffff;
     }
 
@@ -1129,7 +1074,7 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
 
     .scroll {
         overflow-y: auto;
-        max-height: 300px;
+        max-height:`+ tableHeight +`px;
     }
 
     .bodyTable tr:hover td {
@@ -1139,10 +1084,6 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
 
     
     .table-container {
-        max-height: 600px;
-        overflow-y: auto;
-        border: 3px solid #3498db;
-        border-radius: 10px; 
     }
 
     .total-tokens {
@@ -1152,22 +1093,24 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
         padding-top: 5px;
         padding-bottom: 5px; 
         right: 10px; 
-        font-size: 14px;
+        font-size: 12px;
         color: #333;
-        font-weight:bold
+        font-weight: bold;
+        font-family: sans-serif;
     }
 `);
 
     // Create the table structure - headers
-    const outerTable = container.append('table').attr("class", "table-container");
+    const outerTable = container.append('table')
+    .attr("class", "table-container")
+    .attr("height", container.offsetHeight);
 
     // Append the header
     outerTable.append('caption')
         .style("text-anchor", "middle")
         .style("font-size", "30px")
         .style("font-weight", "bold")
-        .style("fill", "#333")
-        .text('TextVis Table Visualization');
+        .style("fill", "#333");
 
     // Create table entries structure
     const inner = outerTable.append("tr").append("td")
@@ -1250,7 +1193,7 @@ async function table(tokensOrPath, language = 'en', containerId, sortType = 'alp
     }
 
     // Export to excel if bool export = true
-    if (exoport) {
+    if (exp) {
         exportTableToExcel(containerId);
     }
 
@@ -1372,30 +1315,32 @@ function exportTableToExcel(containerId) {
 
 /******************************************************************************************** */
 
-/**
+
+/** 
  * @description
- * A plugin that renders a line chart for the keywords found in provided tokens, within the given interval.
- * &lt;br>Can choose to display either keywords or TF-IDF scores 
+ * A plugin that renders a linechart from tokens or a text file, where a list of keywords can be 
+ * searched for.
  * 
- * &lt;br>&lt;br>Prerequisites: 
- * &lt;br> - A div container with given dimensions
- * &lt;br> - Scripts wherein this plugin is called must be Scripts wherein this plugin is called must be type="module"
- * 
- * @example
- * // Call linechart with a tokens array, language set to english, interval=20 and an array of keywords to search for
- * linechar(tokens, 'container', 20, 'en', ['hello', 'world']); 
+ * &lt;br>&lt;br> &lt;strong> Prerequisites: &lt;/strong>
+ * &lt;br>- A div container with an ID and given dimensions to place the linechart in 
  * 
  * @async
  * 
- * @param {Array} tokensOrPath Array of tokens or path to a txt file
- * @param {String} containerId The name of the container to hold the line chart
- * @param {Number} [interval=10] Interval of input to display
- * @param {String} [language='en'] Language of the txt file, 'en' or 'sv'
- * @param {Array} keywords Array of words to search for
- * @returns {void} The line chart visualization
+ * @example
+ * // Call linechart with a tokens array, language set to english, interval=20 and an array of keywords to search for
+ * linechart(tokens, 'container', 20, 'en', ['hello', 'world']); 
+ * 
+ * @param {Array} tokensOrPath Array of tokens, path to txt file
+ * @param {String} containerId  The name of the container to hold the treemap 
+ * @param {Int} interval Number of intervals for the stepchart
+ * @param {String} language Language of the txt file, 'en' or 'sv', defaults to 'en'
+ * @param {Array} keywords Array of words to search for, can be left empty []
+ * @param {Boolean} useTFIDF Boolean for activating TF-IDF computations, defaults to false
+ * @returns {void} The linechart visualization
  */
-async function linechart(tokensOrPath, containerId, interval = 10, language = 'en', keywords = []) {
+async function linechart(tokensOrPath, containerId, interval = 10, language = "en", keywords = [], useTFIDF = false) {
     let tokens;
+    
 
     if (typeof tokensOrPath === 'string') {
         // Tokenize the text file
@@ -1447,6 +1392,23 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
         data.push(keywordData);
     });
 
+
+    let tfIdfMap;
+    let toolTipHeight = 60;
+
+    if (useTFIDF) {
+        // Calculate TF-IDF scores
+        const tfIdf = await calculateTfIdf([tokens], language);
+    
+        // Filter tfIdfScores to include only terms present in the keywords array
+        const tfIdfScores = tfIdf[0].filter(({ term }) => keywords.includes(term));
+    
+        // Create a map of terms to their TF-IDF scores
+        tfIdfMap = new Map(tfIdfScores.map(({ term, score }) => [term, score]));
+        toolTipHeight = 75;
+    }
+    
+    
     var container = document.getElementById(containerId);
 
     // Extract the width and height of the container
@@ -1457,6 +1419,16 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
     const margin = { top: 30, right: 30, bottom: 30, left: 30 };
     const width = totalWidth - 60;
     const height = totalHeight - 60;
+    const lineColors = [
+        '#1F78B4',
+        '#FF7F00',
+        '#33A02C',
+        '#CAB2D6',
+        '#E31A1C',
+        '#A6CEE3',
+        '#B2DF8A',
+        '#FB9A99',
+        '#6A3D9A'];
 
     if (foundWords != 0) {
         // Select the container element and adjust its size
@@ -1491,7 +1463,7 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
                 .curve(d3.curveStepAfter);
             svg.append("path")
                 .datum(keywordData)
-                .attr("fill", d3.schemeCategory10[index])
+                .attr("fill", lineColors[index])
                 .attr("opacity", 0.2)
                 .attr("d", area)
                 .on("mouseover", function() {
@@ -1512,7 +1484,7 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
                     // Append rectangle for the tooltip background
                     tooltip.append("rect")
                         .attr("width", 140)
-                        .attr("height", 60) 
+                        .attr("height", toolTipHeight) 
                         .attr("fill", "white")
                         .attr("stroke", "black");
                 
@@ -1540,7 +1512,20 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
                         .text(`Occurrences: ${occurrences}`)
                         .attr("font-size", "12px")
                         .attr("fill", "black");
-                
+                        
+                        
+                        if (useTFIDF &amp;&amp; tfIdfMap &amp;&amp; tfIdfMap.size > 0) {
+                            const tfIdfScore = tfIdfMap.get(keyword);
+                            if (tfIdfScore !== undefined) {
+                                tooltip.append("text")
+                                    .attr("x", 10)
+                                    .attr("y", 65)
+                                    .text(`TF-IDF Score: ${tfIdfScore.toFixed(3)}`)
+                                    .attr("font-size", "12px")
+                                    .attr("fill", "black");
+                            }
+                        }                         
+    
                     // Calculate the position of the tooltip relative to the SVG element
                     const svgRect = svg.node().getBoundingClientRect();
                     const svgX = mouseX - svgRect.left;
@@ -1564,7 +1549,7 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
             svg.append("path")
                 .datum(keywordData)
                 .attr("fill", "none")
-                .attr("stroke", d3.schemeCategory10[index])
+                .attr("stroke", lineColors[index])
                 .attr("stroke-width", 2)
                 .attr("opacity", 1)
                 .attr("d", d3.line()
@@ -1576,38 +1561,36 @@ async function linechart(tokensOrPath, containerId, interval = 10, language = 'e
     }
 }
 
-/******************************************************************************************** */
-
 /**
  * @description
- * A plugin that renders a bar chart from an array of tokens or an array of text files
- * &lt;br> - A list of kewywords can be searched for via the keyword input argument 
- * &lt;br> - Sort the bar chart by frequency or alphabetical order 
+ * A plugin that renders a bar chart from an array of tokens or an array of text files.
+ * &lt;br> - A list of kewywords can be searched for via the keyword input argument. 
+ * &lt;br> - Sort the bar chart by frequency or by alphabetical order.
  * 
  * &lt;br>&lt;br> TF-IDF scores are normalized if more than one txt file or token array were given in the input. 
- * &lt;br>&lt;br> Prerequisites: 
- * &lt;br> - A div container
- * &lt;br> - Scripts wherein this plugin is called must be type="module"
+ * 
+ * &lt;br>&lt;br> &lt;strong> Prerequisites: &lt;/strong>
+ * &lt;br> - A div container with an ID and given dimensions to place the bar chart in.
  * 
  * @async
  * 
  * @example 
  * // Call bar chart with an array of file paths, language set to english, number of words to display = 20, keyowrds sorted 
- * &lt;br>alphabetically (useTFIDF set to false)
+ * // alphabetically (useTFIDF set to false)
  * barchart([path1, path2], 'container', 20, 'en', 'alphabetical, ['hello', 'world', ...], false)
  * 
  * @param {Array} tokensOrPath Array of token arrays, array of file paths to .txt files (strings) or single path to .txt file (string)
  * @param {String} containerId The name of the HTML container to hold the chart
- * @param {int} [nWordsDisplayed] The number of words to display. If not specified (or set to null), displays all.
- * @param {String} [sortBy] Sort output by 'frequency' or 'alphabetical'. Defaults to 'frequency'.
- * @param {String} [language] Language of the txt file, 'en' or 'sv' (if input is not tokenized)
- * @param {Array} [keywords] Array of words to search for
- * @param {bool} [useTFIDF] If true, sort bars based on TF-IDF score
+ * @param {int} nWordsDisplayed The number of words to display. If not specified (or set to null), displays all
+ * @param {String} sortBy Sort output by 'frequency' or 'alphabetical', defaults to 'frequency'
+ * @param {String} language Language of the txt file, 'en' or 'sv', defaults to 'en'
+ * @param {Array} keywords Array of words to search for, can be left empty []
+ * @param {bool} useTFIDF If true, sort bars based on TF-IDF score, defaults to false
  * @returns {void} The bar chart visualization
  */
 
 // sorting input - freq, alphabetical
-async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, language, keywords, useTFIDF) {
+async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy='frequency', language='en', keywords = [], useTFIDF = false) {
 
     language = language || 'en';
     sortBy = sortBy || 'frequency';
@@ -1616,9 +1599,9 @@ async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, lang
     let tokens = await performTokenization(tokensOrPath, language);
 
     // Styling
-    var upperColor = "#444499";
-    var lowerColor = "#AAAAFF";
-    var foundColor = "#FF6633";
+    var upperColor = "#1F78B4";
+    var lowerColor = "#A6CEE3";
+    var foundColor = "#FF7F00";
 
     // Key words search
     if (keywords) {
@@ -1713,7 +1696,7 @@ async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, lang
     const margin = { top: 20, right: 1, bottom: 5 + (0.1 * height), left: 3 + (0.03 * width) };
     const ymargins = margin.top + margin.bottom + (height * 0.01);
     const xmargins = margin.left + margin.right;
-    var fontsize = (2 * height / 100);
+    var fontsize = ((2 * width / 120) - 2);
 
     const parent = d3.select("#" + containerId);
 
@@ -1740,7 +1723,7 @@ async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, lang
         .attr("transform", "translate(" + margin.left + "," + (height * 0.02) + ")")
         .selectAll("text")
         .attr("fill", "black")
-        .style("font-size", fontsize + "px");
+        .style("font-size", fontsize - 2 + "px");
 
     // Scrollable body, if dataset is large
     const body = parent.append("div")
@@ -1814,7 +1797,6 @@ async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, lang
             .attr("id", "tooltip")
             .attr("transform", "translate(" + tooltipX + "," + tooltipY + ")");
             
-            
             var content = d.word + ": " + d.count + " occurences";
 
             const tooltipText = tooltip.append("text")
@@ -1835,10 +1817,10 @@ async function barchart(tokensOrPath, containerId, nWordsDisplayed, sortBy, lang
                 .attr("font-size", fontsize + 2)
                 .attr("fill", "black")
                 .selectAll("tspan")
-                .data(content.split("\n")) // Split content by newline character
+                .data(content.split("\n"))
                 .enter().append("tspan")
-                .attr("x", 4) // Adjust x position as needed
-                .attr("dy", "1.2em") // Set line spacing
+                .attr("x", 4)
+                .attr("dy", "1.2em")
                 .text(function(d) { return d; });
         })
         .on("mouseout", function() {
@@ -1874,10 +1856,7 @@ async function performTokenization(tokensOrPaths, language) {
     return tokens;
 }
 
-
-/******************************************************************************************** */
-
-export { barchart, calculateTfIdf, countWords, linechart, normalize, normalizeTfIdfScores, searchWords, sort, stem, table, tokenize, treemap };
+export { barchart, calculateTfIdf, countWords, linechart, normalize, normalizeTfIdfScores, searchWords, sort, table, tokenize, treemap };
 </code></pre>
         </article>
     </section>
@@ -1888,13 +1867,13 @@ export { barchart, calculateTfIdf, countWords, linechart, normalize, normalizeTf
 </div>
 
 <nav id="sideBar">
-  <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#barchart">barchart</a></li><li><a href="global.html#linechart">linechart</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#treemap">treemap</a></li><br><li><a href="global.html#calculateTfIdf">calculateTfIdf</a></li><li><a href="global.html#countWords">countWords</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#normalizeTfIdfScores">normalizeTfIdfScores</a></li><li><a href="global.html#searchWords">searchWords</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#tokenize">tokenize</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#barchart">barchart</a></li><li><a href="global.html#calculateTfIdf">calculateTfIdf</a></li><li><a href="global.html#countWords">countWords</a></li><li><a href="global.html#linechart">linechart</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#normalizeTfIdfScores">normalizeTfIdfScores</a></li><li><a href="global.html#searchWords">searchWords</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#table">table</a></li><li><a href="global.html#tokenize">tokenize</a></li><li><a href="global.html#treemap">treemap</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 30 2024 08:50:21 GMT+0200 (centraleuropeisk sommartid)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 06 2024 19:46:07 GMT+0200 (centraleuropeisk sommartid)
 </footer>
 
 <script> prettyPrint(); </script>
