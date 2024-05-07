@@ -93,9 +93,44 @@
             Documentation of textVis 
         </h2>
         <p>
+        <pre>
         <em><strong>textVis</strong></em> is a plugin library for text visualization in <em>javaScript</em> and <em>d3</em>
-        </p>
-        <p>
+        <em><strong>textVis</strong></em> features the following core functionalities and visalization techninques: 
+        <table id="infoTable">
+            <tr>
+                <th style="width: 30%;">Core functinalities</th>
+                <th style="width: 70%;">Visualizations</th>
+            </tr>
+            <tr>
+                <td>calculateTfIdf</td>
+                <td>bar chart</td>
+            </tr>
+            <tr>
+                <td>countWords</td>
+                <td>line chart</td>
+            </tr>
+            <tr>
+                <td>normalize</td>
+                <td>table</td>
+            </tr>
+            <tr>
+                <td>normalizeTfIdfScores</td>
+                <td>treemap</td>
+            </tr>
+            <tr>
+                <td>searchWords</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>sort</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>tokenize</td>
+                <td></td>
+            </tr>
+        </table> 
+        </pre>
         <pre>
     <strong><h5>Navigate the documentation:</h5></strong>
      - Navigate to any function or plugin in the menu to the right under Global
@@ -119,18 +154,15 @@
         This example assumes <strong><em>textVisBundle.js</em></strong> is placed in the same directory as the working project after it has been
         downloaded from the GitHub repository
 
-     - All plugins are modular-based, that is why all plugin imports and plugin calls are done inside a script of type module 
-        in the above example
+     - <strong>Important: </strong>All plugins are modular-based, that is why all plugin imports and plugin calls are done inside a script of type 
+        module in the above example
 
-     - All visualizations require predefined div containers, with explicitly given dimensions, to be placed in: 
+     - All visualization plugins require predefined div containers, with explicitly given dimensions, to be placed in: 
         <strong>Example:</strong> &lt;div id='container' style='width:900px; height:600px;'&gt;&lt;/div&gt;
      <strong><h5>Tips:</h5></strong>
      - TF-IDF a method to compute weights of terms within one or more documents: <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">More about TF-IDF</a>
-     - Need a quick review of HTML, CSS or JS? 
-            <a href="https://www.w3schools.com/html/default.asp">HTML</a>
-            <a href="https://www.w3schools.com/css/default.asp">CSS</a>
-            <a href="https://www.w3schools.com/js/default.asp">JS</a>
-    - Explore <em><strong>d3</strong></em> further: <a href="https://d3js.org/">More about d3</a>
+     - Need a quick review of HTML, CSS or JS? -> Check these out: <a href="https://www.w3schools.com/html/default.asp">HTML</a>, <a href="https://www.w3schools.com/css/default.asp">CSS</a> or <a href="https://www.w3schools.com/js/default.asp">JS</a>
+     - Explore <em><strong>d3</strong></em> further: <a href="https://d3js.org/">More about d3</a>
     
     </pre>
         </p>
